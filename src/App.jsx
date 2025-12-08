@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity } from 'lucide-react';
 
 // --- KONFIGURATION ---
-// HIER WURDE DIE ENDUNG ANGEPASST:
 const LOGO_URL = "/logo.jpeg"; 
 
 // Farben aus dem Logo
@@ -821,8 +820,13 @@ export default function ActAndSwipeApp() {
         {/* VIEW: START */}
         {view === 'start' && (
           <div className="flex flex-col items-center justify-center h-full pt-16 px-6 animate-fadeIn text-center">
-            <div className="mb-8 w-40 h-40 mx-auto flex items-center justify-center">
-                <img src={LOGO_URL} alt="Polithea Logo" className="w-full h-full object-contain" />
+            <div className="mb-8 mx-auto flex items-center justify-center">
+                <img 
+                  src={LOGO_URL} 
+                  alt="Polithea Logo" 
+                  className="object-contain" 
+                  style={{ maxWidth: '160px', height: 'auto' }}
+                />
             </div>
             <h2 className="text-2xl font-bold mb-4 text-slate-900 leading-tight">
               Du bereitest die Probe vor und suchst die passenden Spiele und Übungen?
