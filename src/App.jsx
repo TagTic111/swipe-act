@@ -19,7 +19,7 @@ const ACCENT_COLOR_BORDER = "border-[#FFD700]/40";
 const SELECTION_COLOR = "selection:bg-[#E05D5D]/30";
 const GRADIENT_BG = "bg-gradient-to-br from-[#FFD700] via-[#FFB347] to-[#FF8C00]"; 
 
-// --- DATENBANK (TEIL B) - MIT DAUER & NEUEN SPIELEN ---
+// --- DATENBANK (TEIL B) - VOLLSTÄNDIG DETAILLIERT ---
 const EXERCISE_DB = [
   // NEU: SAMURAI
   {
@@ -30,16 +30,16 @@ const EXERCISE_DB = [
     tags: ["Reaktion", "Kampfkunst", "Energie"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Ein hochenergetisches Spiel, das Wachheit, Präzision und schnelle Reaktionen erfordert. Es weckt müde Gruppen sofort auf.",
+      context: "Ein hochenergetisches Spiel, das Wachheit, Präzision und schnelle Reaktionen erfordert. Es weckt müde Gruppen sofort auf und synchronisiert die Aufmerksamkeit.",
       instructions: [
-        "Die Gruppe steht im Kreis. Eine Person beginnt als Samurai, hebt das 'Schwert' (beide Hände zusammen) über den Kopf und ruft laut 'Hah!'.",
-        "Sie 'schlägt' das Schwert nach unten und zeigt auf eine andere Person im Kreis.",
-        "Diese Person reißt sofort die Hände hoch ('Hah!').",
-        "Die beiden direkten Nachbar*innen der angezielten Person 'schlagen' nun seitlich in deren Bauchhöhe (ohne Berührung) und rufen ebenfalls 'Hah!'.",
-        "Die Person in der Mitte übergibt den Impuls dann wieder an jemand anderen.",
-        "Wer zögert oder einen Fehler macht, scheidet aus (oder läuft eine Runde um den Kreis)."
+        "Die Gruppe steht im Kreis. Eine Person beginnt als Samurai, hebt das imaginäre Schwert (beide Hände zusammen) über den Kopf und ruft laut 'Hah!'.",
+        "Sie 'schlägt' das Schwert energisch nach unten und zeigt dabei auf eine andere Person im Kreis.",
+        "Diese angezielte Person reißt sofort ihre Hände hoch über den Kopf und ruft ebenfalls 'Hah!'.",
+        "Nun müssen die beiden direkten Nachbar*innen der angezielten Person reagieren: Sie 'schlagen' mit ihren Schwertern seitlich in die Bauchhöhe der mittleren Person (ohne Berührung) und rufen 'Hah!'.",
+        "Die Person in der Mitte, die gerade 'angegriffen' wurde, übernimmt nun die Führung und schlägt das Schwert wieder nach unten, um den Impuls an jemand anderen weiterzugeben.",
+        "Wer zögert, die falsche Bewegung macht oder vergisst zu schreien, scheidet aus und feuert die anderen an."
       ],
-      variations: ["Zeitlupe-Runde.", "Ohne Töne (Silent Samurai)."]
+      variations: ["Zeitlupe-Runde.", "Ohne Töne (Silent Samurai).", "Wer rausfliegt, läuft eine Runde um den Kreis, um wieder reinzukommen."]
     }
   },
   // NEU: KOTZENDES KÄNGURU
@@ -51,16 +51,17 @@ const EXERCISE_DB = [
     tags: ["Lachen", "Schnelligkeit", "Fehlerkultur"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Ein extrem lustiges Reaktionsspiel, bei dem es darum geht, sich nicht zu ernst zu nehmen. Perfekt zum Lockerwerden.",
+      context: "Ein extrem lustiges Reaktionsspiel, bei dem es darum geht, sich nicht zu ernst zu nehmen und schnell im Team zu reagieren. Perfekt, um die Stimmung zu lockern.",
       instructions: [
-        "Alle stehen im Kreis. Eine Person in der Mitte zeigt auf jemanden und nennt eine Figur (z.B. 'Toaster', 'Elefant', 'Kotzendes Känguru').",
-        "Die angezeigte Person und ihre beiden Nachbar*innen müssen sofort gemeinsam diese Figur darstellen.",
-        "**Toaster:** Mitte springt auf und ab, Nachbarn bilden mit Armen den Schlitz.",
-        "**Elefant:** Mitte macht Rüssel, Nachbarn machen große Ohren.",
-        "**Kotzendes Känguru:** Mitte hält Hände vor den Bauch wie Beutel und würgt, Nachbarn hüpfen panisch zur Seite.",
-        "Wer zu langsam ist oder falsch reagiert, muss in die Mitte."
+        "Alle stehen im Kreis. Eine Person steht in der Mitte, zeigt auf jemanden im Kreis und nennt eine Figur (z.B. 'Elefant').",
+        "Die angezeigte Person und ihre beiden direkten Nachbar*innen müssen sofort gemeinsam diese Figur darstellen.",
+        "**Der Toaster:** Die mittlere Person springt auf und ab. Die Nachbarn bilden mit ihren Armen einen Kasten um sie herum.",
+        "**Der Elefant:** Die Mitte macht mit den Armen einen Rüssel. Die Nachbarn formen mit ihren Armen große Ohren an den Seiten der mittleren Person.",
+        "**Kotzendes Känguru:** Die Mitte hält die Hände wie einen Beutel vor den Bauch und macht Würgegeräusche. Die Nachbarn hüpfen panisch als kleine Kängurus zur Seite.",
+        "**James Bond:** Die Mitte macht eine Pistolen-Pose. Die Nachbarn schmachten die Mitte an ('Oh, James!').",
+        "Wer zu langsam ist oder falsch reagiert, muss in die Mitte und die nächste Figur ansagen."
       ],
-      variations: ["Eigene Figuren erfinden (z.B. Waschmaschine, Mixer)."]
+      variations: ["Die Gruppe erfindet eigene Figuren (z.B. Waschmaschine, Mixer, Palme)."]
     }
   },
   // NEU: GEFÜHLS-ORCHESTER
@@ -72,13 +73,13 @@ const EXERCISE_DB = [
     tags: ["Chor", "Emotion", "Dynamik"],
     attributes: { focus: "intro", energy: "low", level: "advanced" },
     content: {
-      context: "Trainiert die stimmliche Vielfalt und das Zusammenspiel in der Gruppe. Die Teilnehmenden werden zu Instrumenten einer Emotion.",
+      context: "Trainiert die stimmliche Vielfalt und das Zusammenspiel in der Gruppe. Die Teilnehmenden werden zu Instrumenten einer Emotion, statt Musik zu machen.",
       instructions: [
-        "Die Gruppe steht im Halbkreis. Eine Person (Dirigent*in) steht davor.",
-        "Der/Die Dirigent*in weist verschiedenen Gruppen oder Einzelpersonen bestimmte Emotionen zu (z.B. Wut, Trauer, hysterische Freude).",
-        "Die Teilnehmenden dürfen nur Geräusche oder Gibberish (Kauderwelsch) nutzen, keine echten Wörter.",
-        "Der/Die Dirigent*in 'spielt' das Orchester: Er/Sie bestimmt Lautstärke, Einsatz und Tempo durch Gesten.",
-        "Ziel ist es, eine 'Symphonie der Gefühle' zu erzeugen."
+        "Die Gruppe steht im Halbkreis (das Orchester). Eine Person (der/die Dirigent*in) steht davor.",
+        "Der/Die Dirigent*in weist verschiedenen Gruppen oder Einzelpersonen bestimmte Emotionen zu (z.B. 'Ihr seid die Wut', 'Ihr seid die Trauer', 'Du bist hysterische Freude').",
+        "Die Teilnehmenden dürfen nur Geräusche, Laute oder Gibberish (Kauderwelsch) nutzen, keine echten Wörter.",
+        "Der/Die Dirigent*in 'spielt' nun das Orchester: Er/Sie zeigt auf Gruppen, bestimmt mit Handbewegungen die Lautstärke (hoch/runter) und das Tempo.",
+        "Er/Sie kann Emotionen mischen, Solos vergeben oder ein Crescendo (alle laut) erzeugen. Ziel ist eine 'Symphonie der Gefühle'."
       ],
       variations: ["Ein echtes Lied (z.B. 'Alle meine Entchen') nur mit emotionalen Lauten 'singen'."]
     }
@@ -92,34 +93,34 @@ const EXERCISE_DB = [
     tags: ["Improvisation", "Zuhören", "Kreativität"],
     attributes: { focus: "intro", energy: "low", level: "beginner" },
     content: {
-      context: "Fördert das Zuhören und das Akzeptieren von Angeboten. Die eigene Idee muss zugunsten der Gruppengeschichte aufgegeben werden.",
+      context: "Fördert das Zuhören und das Akzeptieren von Angeboten (Ja-Sagen). Die eigene Idee muss zugunsten der Gruppengeschichte aufgegeben werden.",
       instructions: [
         "Die Gruppe steht im Kreis.",
-        "Das Ziel ist es, gemeinsam eine Geschichte zu erzählen. Jede Person darf aber immer nur genau **ein einziges Wort** beisteuern.",
+        "Das Ziel ist es, gemeinsam eine zusammenhängende Geschichte zu erzählen. Jede Person darf aber immer nur genau **ein einziges Wort** beisteuern.",
         "Die Geschichte sollte grammatikalisch korrekt sein und Sinn ergeben (oder lustigen Unsinn).",
-        "Beispiel: 'Es' - 'war' - 'einmal' - 'ein' - 'riesiger' - 'blauer' - 'Zwerg'...",
-        "Wichtig: Nicht den Satz im Kopf vorplanen, sondern auf das Wort davor reagieren."
+        "Beispiel: Person A: 'Es', Person B: 'war', Person C: 'einmal', Person D: 'ein', Person E: 'riesiger'...",
+        "Wichtig ist, nicht den Satz im eigenen Kopf vorzuplanen, sondern spontan auf das Wort davor zu reagieren. Wenn der Satz zu Ende ist, sagt die nächste Person 'Punkt' und beginnt einen neuen."
       ],
-      variations: ["Als 'Experte' mit vier Köpfen, der Interviews gibt.", "Schnelligkeits-Runde: Wer zögert, ist raus."]
+      variations: ["Als 'Experte' mit vier Köpfen: Vier Personen sitzen eng nebeneinander und beantworten Fragen des Publikums als eine Person Wort für Wort."]
     }
   },
-  // VORHERIGE SPIELE (ALLE AKTUALISIERT)
+  // KATEGORIE 1: AUFWÄRMEN
   {
     id: "the-machine",
     title: "Die Maschine",
     category: "Gruppendynamik & Rhythmus",
-    duration: "10 Min",
+    duration: "10-15 Min",
     tags: ["Kooperation", "Körperarbeit", "Sound"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Eine großartige Übung, um eine Gruppe in Einklang zu bringen. Sie zeigt, wie individuelle Beiträge ein großes Ganzes ergeben.",
+      context: "Eine großartige Übung, um eine Gruppe in Einklang zu bringen. Sie zeigt, wie individuelle Beiträge ein großes Ganzes ergeben und fördert das Zuhören.",
       instructions: [
-        "Eine Person beginnt in der Mitte des Raumes mit einer sich wiederholenden Bewegung und einem dazu passenden Geräusch.",
-        "Eine zweite Person kommt hinzu und fügt eine eigene Bewegung mit Geräusch an.",
-        "Nacheinander kommen alle Teilnehmenden hinzu, bis eine riesige 'Maschine' entsteht.",
-        "Die Spielleitung kann die Maschine 'schneller' oder 'langsamer' laufen lassen."
+        "Eine Person beginnt in der Mitte des Raumes mit einer sich wiederholenden, mechanischen Bewegung und einem dazu passenden Geräusch.",
+        "Eine zweite Person beobachtet dies kurz, kommt hinzu und fügt eine eigene Bewegung mit Geräusch an, die sich logisch, rhythmisch oder körperlich auf die erste bezieht (z.B. ein Zahnrad, das in das erste greift).",
+        "Nacheinander kommen alle Teilnehmenden hinzu, bis eine riesige, komplexe 'Maschine' aus Körpern und Klängen entsteht.",
+        "Die Spielleitung kann die Maschine 'manipulieren': 'Schneller!', 'Zeitlupe!', 'Lauter!', oder 'Stecker ziehen' (alle fallen zusammen)."
       ],
-      variations: ["Die Maschine produziert ein bestimmtes Produkt.", "Die Maschine wird langsam dekonstruiert."]
+      variations: ["Die Maschine produziert ein bestimmtes Produkt (z.B. 'Hoffnung').", "Die Maschine wird langsam dekonstruiert, Person für Person."]
     }
   },
   {
@@ -130,14 +131,15 @@ const EXERCISE_DB = [
     tags: ["Improvisation", "Energie", "Bestätigung"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Dieses Spiel trainiert radikale Akzeptanz und bringt die Energie sofort hoch. Es verhindert langes Nachdenken.",
+      context: "Dieses Spiel trainiert radikale Akzeptanz und bringt die Energie sofort hoch. Es verhindert langes Nachdenken ('Zensur im Kopf') und fördert das gemeinsame Tun.",
       instructions: [
-        "Die Gruppe läuft kreuz und quer durch den Raum.",
-        "Eine Person ruft laut einen Vorschlag: 'Lasst uns alle Bäume fällen!'",
-        "Alle rufen sofort: 'Ja, genau!' und führen die Tätigkeit aus.",
-        "Dann macht jemand anderes einen neuen Vorschlag."
+        "Die Gruppe läuft ziellos kreuz und quer durch den Raum.",
+        "Eine Person ruft laut einen Vorschlag für eine Tätigkeit in den Raum, z.B.: 'Lasst uns alle Bäume fällen!' oder 'Lasst uns wie Hühner gackern!'",
+        "Alle anderen rufen sofort laut und begeistert: 'Ja, genau!' (oder 'Yes, let's!') und führen die vorgeschlagene Tätigkeit sofort pantomimisch aus.",
+        "Nach kurzer Zeit macht eine andere Person einen neuen Vorschlag, wieder rufen alle 'Ja, genau!' und wechseln die Tätigkeit.",
+        "Ziel ist es, so viele Impulse wie möglich schnell hintereinander umzusetzen, ohne sie zu bewerten."
       ],
-      variations: ["Gefühle einbauen.", "Abstrakte Konzepte darstellen."]
+      variations: ["Gefühle einbauen ('Lasst uns wütend sein!').", "Abstrakte Konzepte ('Lasst uns rot sein!')."]
     }
   },
   {
@@ -148,14 +150,16 @@ const EXERCISE_DB = [
     tags: ["Spannung", "Wahrnehmung", "Stille"],
     attributes: { focus: "extra", energy: "low", level: "beginner" },
     content: {
-      context: "Ein Klassiker, der die Beobachtungsgabe schärft. Ideal, um eine unruhige Gruppe zu fokussieren.",
+      context: "Ein Klassiker, der die Beobachtungsgabe schärft und eine knisternde Atmosphäre erzeugt. Ideal, um eine unruhige Gruppe zu fokussieren.",
       instructions: [
-        "Eine Person (Detektiv*in) geht vor die Tür.",
-        "Die Spielleitung bestimmt heimlich eine*n Mörder*in.",
-        "Der/Die Mörder*in 'tötet' andere durch Zuwinkern. Wer angeblinzelt wird, stirbt dramatisch.",
-        "Der/Die Detektiv*in muss den/die Täter*in finden."
+        "Die Gruppe sitzt im Kreis oder läuft durcheinander. Eine Person wird als Detektiv*in bestimmt und vor die Tür geschickt.",
+        "Die Spielleitung bestimmt heimlich eine*n 'Mörder*in' (z.B. durch Antippen auf den Rücken, während alle die Augen zu haben).",
+        "Der/Die Detektiv*in kommt zurück in die Mitte.",
+        "Der/Die Mörder*in 'tötet' andere Teilnehmende durch diskretes Zuwinkern (Blinzeln).",
+        "Wer angeblinzelt wird, wartet kurz (damit es nicht zu offensichtlich ist) und stirbt dann dramatisch (mit Geräusch/Umfallen).",
+        "Der/Die Detektiv*in muss herausfinden, wer der Mörder ist. Er/Sie hat drei Versuche."
       ],
-      variations: ["Thematisches Sterben (z.B. Operntod)."]
+      variations: ["Thematisches Sterben (z.B. wie in einer Oper sterben).", "Zwei Mörder gleichzeitig."]
     }
   },
   {
@@ -166,13 +170,15 @@ const EXERCISE_DB = [
     tags: ["Koordination", "Gehirn-Jogging", "Scheitern"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Fördert die Unabhängigkeit der Gehirnhälften.",
+      context: "Diese Übung fördert die Unabhängigkeit der Gehirnhälften. Sie soll schwierig sein! Das Ziel ist, über das eigene Scheitern zu lachen, statt frustriert zu sein.",
       instructions: [
-        "Rechte Hand zeichnet einen Kreis in die Luft.",
-        "Linke Hand zeichnet ein Kreuz in die Luft.",
-        "Beides gleichzeitig ausführen."
+        "Alle Teilnehmenden stehen bequem im Raum.",
+        "Hebt die rechte Hand und zeichnet kontinuierlich einen großen Kreis in die Luft.",
+        "Wenn das läuft, nehmt die linke Hand dazu und zeichnet ein großes Plus-Zeichen (Kreuz) in die Luft.",
+        "Versucht, beide Bewegungen gleichzeitig und im gleichen Tempo auszuführen.",
+        "Meistens beginnt eine Hand, der anderen zu folgen. Schüttelt die Arme aus und versucht es erneut."
       ],
-      variations: ["Hand und Fuß kombinieren."]
+      variations: ["Rechte Hand Kreis, rechtes Bein schreibt den eigenen Namen auf den Boden.", "Wechsel: Linke Hand Kreis, rechte Hand Kreuz."]
     }
   },
   {
@@ -183,30 +189,34 @@ const EXERCISE_DB = [
     tags: ["Körperspannung", "Spaß", "Eisbrecher"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Fokus auf Körperspannung und Entspannung.",
+      context: "Fokus auf das bewusste Umschalten zwischen Körperspannung und totaler Entspannung. Ein sehr physischer Eisbrecher.",
       instructions: [
-        "Ein 'Bär', Rest sind 'Holzfällende'.",
-        "Wenn der Bär brüllt, stellen sich alle tot (entspannt).",
-        "Der Bär prüft die Körperspannung (Arme heben etc.). Wer anspannt, wird auch Bär."
+        "Eine Person ist der 'Bär', alle anderen sind 'Holzfällende'.",
+        "Der Bär dreht sich um, schließt die Augen und zählt laut (z.B. bis 5). Die Holzfällenden bewegen sich frei im Raum.",
+        "Der Bär dreht sich blitzschnell um und brüllt laut. Alle Holzfällenden müssen sofort 'tot' umfallen und regungslos (entspannt) liegen bleiben.",
+        "Der Bär geht herum und prüft die 'Leichen': Er hebt Arme oder Beine an. Diese müssen schwer und entspannt zurückfallen.",
+        "Wer Spannung zeigt, lacht oder hilft (den Arm festhält), wird ebenfalls zum Bären und hilft beim Prüfen."
       ],
-      variations: ["Thematische Anpassung (Statuen)."]
+      variations: ["Thematische Anpassung: Bildhauer und Tonfiguren.", "Mehrere Bären von Anfang an."]
     }
   },
   {
     id: "bomb-shield",
     title: "Bombe und Schutzschild",
     category: "Raum & Dynamik",
-    duration: "10 Min",
+    duration: "10-15 Min",
     tags: ["Raum", "Dynamik", "Paranoia"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Simuliert Massenbewegungen durch individuelle Ziele.",
+      context: "Simuliert komplexe Massenbewegungen. Zeigt, wie individuelle, geheime Ziele zu kollektivem Chaos führen können.",
       instructions: [
-        "Jede*r wählt geheim eine 'Bombe' und ein 'Schild'.",
-        "Ziel: Das Schild muss immer genau zwischen mir und der Bombe sein.",
-        "Es entsteht ein dynamisches Chaos."
+        "Alle gehen durch den Raum. Jede*r wählt geheim eine Person als 'Bombe' und eine andere Person als 'Schutzschild' aus.",
+        "Die einzige Regel: Du musst dich immer so bewegen, dass dein 'Schutzschild' räumlich genau zwischen dir und der 'Bombe' ist.",
+        "Auf 'Los' versuchen alle gleichzeitig, diese Position einzunehmen.",
+        "Da sich Bombe und Schild auch bewegen, entsteht ein dynamisches, nie endendes Chaos.",
+        "Stoppen und Reflektieren: Wie fühlt es sich an, von außen gesteuert zu werden?"
       ],
-      variations: ["Maximaler Abstand zur Bombe, minimaler zum Schild."]
+      variations: ["Umgekehrte Regel: Sei so nah wie möglich an der Bombe und so weit wie möglich vom Schild."]
     }
   },
   {
@@ -217,12 +227,15 @@ const EXERCISE_DB = [
     tags: ["Vertrauen", "Führung", "Macht"],
     attributes: { focus: "extra", energy: "low", level: "beginner" },
     content: {
-      context: "Untersucht Führung und Hingabe non-verbal.",
+      context: "Untersucht Führung und Hingabe auf non-verbale Weise. Fördert Empathie für die Grenzen des Partners.",
       instructions: [
-        "A hält Handfläche vor das Gesicht von B.",
-        "B ist 'hypnotisiert' und muss den Abstand halten, während A ihn/sie führt."
+        "Paarbildung. Person A hält die Handfläche ca. 20-30cm vor das Gesicht von Person B.",
+        "Person B ist 'hypnotisiert': Sie muss ihren Kopf so bewegen, dass der Abstand zur Handfläche immer exakt gleich bleibt.",
+        "A beginnt langsam, die Hand zu bewegen (hoch, runter, drehen, durch den Raum gehen). B muss mit dem ganzen Körper folgen (in die Knie gehen, strecken).",
+        "A ist verantwortlich für die Sicherheit von B (nirgendwo gegenstoßen!).",
+        "Nach 3-5 Minuten Rollenwechsel."
       ],
-      variations: ["Gegenseitige Hypnose."]
+      variations: ["Gegenseitige Hypnose: A führt B mit der rechten Hand, B führt A mit der linken Hand.", "Gruppenhypnose: Einer führt drei Leute gleichzeitig."]
     }
   },
   {
@@ -233,13 +246,16 @@ const EXERCISE_DB = [
     tags: ["Reaktion", "Solidarität"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Energetisierendes Reaktionsspiel.",
+      context: "Ein schnelles Spiel, das wach macht. Es kann auch als Metapher für Verdrängung oder Platzmangel genutzt werden.",
       instructions: [
-        "Alle sitzen im Kreis, eine Person in der Mitte.",
-        "Mitte ruft 'Rutsch!' zu einer sitzenden Person.",
-        "Diese muss wegrennen und einen neuen Platz suchen, Nachbarn müssen aufrücken."
+        "Alle sitzen im Kreis auf Stühlen. Eine Person steht in der Mitte (hat keinen Stuhl).",
+        "Die Person in der Mitte geht zu jemandem im Kreis, zeigt auf ihn und ruft laut 'Rutsch!' (oder 'Budge!').",
+        "Die angesprochene Person muss sofort aufstehen und wegrennen, um einen *neuen* Platz zu finden.",
+        "Gleichzeitig müssen die beiden Nachbarn der angesprochenen Person einen Platz aufrücken, um die Lücke zu schließen. Es entsteht Bewegung.",
+        "Die Person aus der Mitte versucht, einen der freiwerdenden Stühle zu ergattern.",
+        "Wer übrig bleibt, muss in die Mitte."
       ],
-      variations: ["Ohne Stühle."]
+      variations: ["Ohne Stühle: Markierungen am Boden nutzen.", "Die Richtung des Aufrückens variieren."]
     }
   },
   {
@@ -250,146 +266,167 @@ const EXERCISE_DB = [
     tags: ["Fokus", "Reaktion", "Gruppe"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Klassiker zur Energiefokussierung.",
+      context: "Der Klassiker zur Energiefokussierung. Es geht um klare Impulse, Augenkontakt und schnelles Reagieren.",
       instructions: [
-        "'Zip': Impuls zum Nachbarn.",
-        "'Zap': Impuls durch den Kreis.",
-        "'Boing': Impuls blocken."
+        "Alle im Kreis. Wir schicken Energie herum.",
+        "**Zip:** Ein Klatschen mit Blickkontakt zum direkten Nachbarn (links oder rechts). Die Energie fließt weiter.",
+        "**Zap:** Ein Klatschen quer durch den Kreis zu einer beliebigen Person. Blickkontakt ist essenziell!",
+        "**Boing:** Wenn man ein Zip oder Zap bekommt, kann man 'Boing' rufen und mit beiden Händen abwehren. Der Sender muss den Impuls dann woanders hinschicken.",
+        "Das Tempo sollte stetig gesteigert werden. Wer schläft, fliegt raus (oder alle jubeln ihm zu)."
       ],
-      variations: ["Zoom, Schüttel."]
+      variations: ["Zoom (Auto-Geräusch) für Richtungswechsel.", "Toaster (als Strafrunde)."]
     }
   },
   {
     id: "glass-cobra",
     title: "Die Gläserne Kobra",
     category: "Gruppendynamik",
-    duration: "15 Min",
+    duration: "15-20 Min",
     tags: ["Sinne", "Vertrauen", "Blind"],
     attributes: { focus: "intro", energy: "low", level: "beginner" },
     content: {
-      context: "Fördert das Spüren der Gruppe als Organismus.",
+      context: "Fördert das Spüren der Gruppe als einen Organismus. Man muss die Kontrolle abgeben und auf feine Signale hören.",
       instructions: [
-        "Polonaise, alle außer Anführer*in haben Augen zu.",
-        "Führung durch Impulse auf die Schultern.",
-        "Nicht abreißen lassen."
+        "Die Gruppe formt eine Polonaise. Alle schließen die Augen, außer der allerersten Person (Kopf der Kobra).",
+        "Jede*r legt die Hände auf die Schultern der Vorderperson.",
+        "Der Kopf führt die Schlange langsam durch den Raum. Er muss Hindernisse umgehen.",
+        "Die Impulse (Stopp, Rechts, Links, Schneller) müssen rein körperlich über die Hände/Schultern von vorne nach ganz hinten durchgegeben werden.",
+        "Das Ziel: Die Kobra darf nicht zerreißen. Wenn der Kontakt abreißt, frieren alle ein."
       ],
-      variations: ["Führungswechsel."]
+      variations: ["Der Kopf geht ans Ende der Schlange, die nächste Person übernimmt (Augen auf).", "Komplett blind (nur für sichere Räume)."]
     }
   },
   {
     id: "human-knot",
     title: "Der Menschliche Knoten",
     category: "Problemlösung",
-    duration: "10-15 Min",
+    duration: "15 Min",
     tags: ["Problemlösung", "Körperkontakt", "Kooperation"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Physisches Rätsel für Kooperation.",
+      context: "Ein physisches Rätsel, das Berührungsängste abbaut und Kooperation erzwingt.",
       instructions: [
-        "Alle greifen hände kreuz und quer.",
-        "Den Knoten entwirren ohne loszulassen."
+        "Alle stehen eng im Kreis, Schulter an Schulter.",
+        "Alle schließen die Augen und strecken die Hände in die Mitte.",
+        "Jede Hand sucht eine andere Hand zum Greifen. Regeln: Nicht die Hand des direkten Nachbarn und nicht beide Hände derselben Person.",
+        "Augen auf. Jetzt ist die Gruppe verknotet.",
+        "Aufgabe: Entwirrt den Knoten, bis wieder ein großer Kreis (oder mehrere kleine) entsteht, ohne die Hände loszulassen.",
+        "Man muss übereinander steigen, drunter durch kriechen usw. Vorsicht ist geboten!"
       ],
-      variations: ["Stumm."]
+      variations: ["Stumm (ohne Sprechen).", "Mit verbundenen Augen (sehr schwer!)."]
     }
   },
   {
     id: "racing-chairs",
     title: "Rhythmus mit Stühlen",
     category: "Kooperation & Stress",
-    duration: "15 Min",
+    duration: "15-20 Min",
     tags: ["Kooperation", "Stress", "De-Mechanisierung"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Kooperation unter Zeitdruck.",
+      context: "Kooperation unter Zeitdruck und Ressourcenmangel. Zeigt, wie Gruppen sich unter Stress organisieren.",
       instructions: [
-        "Gruppe steht auf Stuhlreihe, ein Stuhl ist frei.",
-        "Der freie Stuhl muss von hinten nach vorne durchgereicht werden, ohne Bodenberührung."
+        "Stelle eine Reihe von Stühlen auf (Anzahl der Teilnehmenden + 1).",
+        "Alle stellen sich auf die Stühle hintereinander. Der letzte Stuhl ist frei.",
+        "Ziel: Die Gruppe muss eine bestimmte Strecke zurücklegen (oder den Raum durchqueren), ohne den Boden zu berühren.",
+        "Dazu muss der jeweils freie Stuhl von hinten nach vorne durchgereicht werden.",
+        "Alle müssen eng zusammenrücken, um Platz zu machen. Wenn jemand den Boden berührt, geht es zurück zum Start."
       ],
-      variations: ["Wettkampf."]
+      variations: ["Wettkampf: Zwei Teams gegeneinander.", "Verbot der verbalen Kommunikation."]
     }
   },
   {
     id: "count-to-20",
     title: "Zählen bis 20",
     category: "Zuhören & Fokus",
-    duration: "10 Min",
+    duration: "10-15 Min",
     tags: ["Zuhören", "Gruppengefühl"],
     attributes: { focus: "intro", energy: "low", level: "beginner" },
     content: {
-      context: "Kollektives Zuhören und Timing.",
+      context: "Trainiert das kollektive Zuhören und das Gespür für den richtigen Moment (Timing). Bringt Ruhe rein.",
       instructions: [
-        "Augen zu. Gemeinsam bis 20 zählen.",
-        "Wenn zwei gleichzeitig sprechen: Zurück auf 1."
+        "Alle liegen am Boden oder sitzen im Kreis, Augen geschlossen.",
+        "Aufgabe: Die Gruppe muss gemeinsam von 1 bis 20 zählen.",
+        "Regeln: Keine Absprachen, keine feste Reihenfolge. Jede Zahl darf nur von einer Person gesagt werden.",
+        "Wenn zwei oder mehr Leute gleichzeitig eine Zahl sagen, stoppt das Spiel und die Gruppe muss wieder bei '1' anfangen.",
+        "Es erfordert Geduld: Man muss lernen, Impulse zurückzuhalten."
       ],
-      variations: ["Rückwärts."]
+      variations: ["Rückwärts zählen.", "Bis zur Anzahl der Gruppenteilnehmer zählen."]
     }
   },
   {
     id: "great-game-power",
     title: "Das große Spiel der Macht",
     category: "Image Theatre",
-    duration: "30 Min",
+    duration: "30-45 Min",
     tags: ["Analyse", "Visuell", "Politik"],
     attributes: { focus: "extra", energy: "low", level: "advanced" },
     content: {
-      context: "Analyse von Machtverhältnissen im Raum.",
+      context: "Eine zentrale Übung des Bildertheaters, die analysiert, wie Machtverhältnisse allein durch räumliche Anordnung entstehen.",
       instructions: [
-        "Objekte (Stuhl, Flasche etc.) arrangieren.",
-        "Aufgabe: Mach einen Stuhl zum Mächtigsten.",
-        "Diskussion und Analyse."
+        "In der Mitte des Raumes werden verschiedene Alltagsgegenstände platziert (z.B. ein Stuhl, ein Tisch, eine Flasche, ein Buch).",
+        "Aufgabe an die Gruppe: 'Arrangiere diese Objekte so im Raum, dass einer der Stühle der absolut mächtigste Gegenstand im Ensemble wird.'",
+        "Die Teilnehmenden treten nacheinander vor und verändern das Bild (ohne zu sprechen).",
+        "Wenn ein interessantes Bild entsteht, wird diskutiert: Warum wirkt dieser Stuhl mächtig? (Höhe? Isolation? Alle anderen schauen ihn an?)",
+        "Im zweiten Schritt stellen sich Personen in das Bild, um die Machtverhältnisse zu verstärken oder herauszufordern."
       ],
-      variations: ["Personen einfügen."]
+      variations: ["Den 'einsamsten' Stuhl bauen.", "Den 'solidarischsten' Raum bauen."]
     }
   },
   {
     id: "real-to-ideal",
     title: "Vom Realen zum Idealen Bild",
     category: "Image Theatre",
-    duration: "45 Min",
+    duration: "45-60 Min",
     tags: ["Vision", "Veränderung", "Politik"],
     attributes: { focus: "intro", energy: "low", level: "advanced" },
     content: {
-      context: "Visualisierung von Veränderungsprozessen.",
+      context: "Nutzt Körperbilder, um soziale Probleme zu analysieren und konkrete Visionen für Veränderung zu entwickeln.",
       instructions: [
-        "Bild 1: Unterdrückung (Ist).",
-        "Bild 2: Befreiung (Soll).",
-        "Bild 3: Übergang (Wie kommen wir dahin?)."
+        "1. **Bild des Ist-Zustands:** Die Gruppe (oder ein Protagonist) baut eine Statue, die ein reales Problem oder eine Unterdrückung darstellt. Analyse: Was sehen wir?",
+        "2. **Bild des Soll-Zustands:** Die Gruppe baut das ideale Gegenbild (die Befreiung/Lösung). Ist das realistisch?",
+        "3. **Bild des Übergangs:** Das wichtigste Bild. Die Gruppe formt Schritt für Schritt den Weg vom Ist zum Soll. Wie kommen wir dahin?",
+        "Es entstehen mehrere 'Zwischenbilder', die konkrete Handlungsschritte symbolisieren."
       ],
-      variations: ["Dynamisierung."]
+      variations: ["Dynamisierung: Die Statuen dürfen sich bewegen oder einen Satz sagen."]
     }
   },
   {
     id: "complete-image",
     title: "Vervollständige das Bild",
     category: "Image Theatre",
-    duration: "10 Min",
+    duration: "10-15 Min",
     tags: ["Spontaneität", "Assoziation"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Training der schnellen Assoziation.",
+      context: "Training der schnellen visuellen Assoziation. Zeigt, wie Kontext Bedeutung verändert.",
       instructions: [
-        "Zwei Personen frieren in Pose ein.",
-        "Eine geht, eine kommt und ergänzt das Bild neu.",
-        "Schneller Wechsel."
+        "Zwei Personen gehen in die Mitte und nehmen spontan eine Pose ein (z.B. ein Händedruck). Sie frieren ein.",
+        "Eine Person verlässt das Bild. Die verbleibende Person bleibt eingefroren.",
+        "Eine neue Person kommt rein und ergänzt die verbliebene Pose zu einem *völlig neuen* Bild (z.B. wird aus dem Händedruck-Arm jemand, der eine Klippe hochgezogen wird).",
+        "Einfrieren. Die alte Person geht, eine neue kommt.",
+        "Das Spiel wird in schnellem Tempo fortgesetzt."
       ],
-      variations: ["Thematisch."]
+      variations: ["Thematische Vorgaben (z.B. 'Familie', 'Arbeitsplatz').", "Arbeit mit mehr als zwei Personen im Bild."]
     }
   },
   {
     id: "status-cards",
     title: "Status Karten",
     category: "Status & Hierarchie",
-    duration: "20 Min",
+    duration: "20-30 Min",
     tags: ["Status", "Komödie", "Johnstone"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Sichtbarmachung von sozialen Hierarchien.",
+      context: "Sichtbarmachung von sozialen Hierarchien. Inspiriert von Keith Johnstone.",
       instructions: [
-        "Karte an der Stirn (man kennt eigenen Wert nicht).",
-        "Andere entsprechend ihrem Wert behandeln.",
-        "Eigenen Status erraten."
+        "Jede*r Teilnehmende zieht verdeckt eine Spielkarte aus einem Deck.",
+        "Ohne den Wert anzusehen, hält man sich die Karte vor die Stirn (alle anderen sehen den Wert, man selbst nicht).",
+        "Ass/König = Hoher Status. 2/3 = Niedriger Status.",
+        "Die Gruppe bewegt sich durch den Raum (Party-Situation). Man behandelt die anderen entsprechend ihrem Kartenwert (respektvoll, unterwürfig, herablassend, ignorierend).",
+        "Ziel: Jede*r muss am Ende raten, welchen Status/Wert er oder sie selbst hat."
       ],
-      variations: ["Zahlen 1-10."]
+      variations: ["Zahlenkarten 1-10 nutzen.", "Statuswippe spielen (Status während einer Szene tauschen)."]
     }
   },
   {
@@ -400,80 +437,90 @@ const EXERCISE_DB = [
     tags: ["Status", "Subversion", "Szenisch"],
     attributes: { focus: "extra", energy: "low", level: "advanced" },
     content: {
-      context: "Erforschung von subtilem Widerstand.",
+      context: "Erforschung von subtilem Widerstand und Machtverhältnissen.",
       instructions: [
-        "Szene mit klarer Hierarchie.",
-        "Bedienstete*r führt Befehle aus, untergräbt aber subtil den Status."
+        "Zwei Personen improvisieren eine Szene mit klarer Rollenverteilung: Eine Person spielt 'hohen Status' (Chef*in/König*in), die andere 'niedrigen Status' (Bedienstete*r).",
+        "Die Chef-Person gibt Befehle, die andere muss diese ausführen.",
+        "Die spezifische Aufgabe für die untergeordnete Rolle ist es, jeden Befehl zwar äußerlich zu befolgen, aber dabei den Status des/der Vorgesetzten subtil zu untergraben.",
+        "Techniken: Übereifer, 'versehentliche' Missverständnisse, Tollpatschigkeit, die dem Chef schadet.",
+        "Ziel: Die Machtbalance zum Wanken bringen, ohne offen zu rebellieren."
       ],
-      variations: ["Statuswechsel."]
+      variations: ["Statuswechsel innerhalb der Szene erzwingen."]
     }
   },
   {
     id: "rashomon",
-    title: "Rashomon",
+    title: "Rashomon (Perspektivenwechsel)",
     category: "Konflikt & Wahrnehmung",
-    duration: "30 Min",
+    duration: "30-45 Min",
     tags: ["Empathie", "Wahrnehmung"],
     attributes: { focus: "intro", energy: "low", level: "advanced" },
     content: {
-      context: "Subjektive Wahrnehmung von Konflikten.",
+      context: "Diese Übung verdeutlicht, wie subjektiv Wahrnehmung ist. Inspiriert von Kurosawas Film, zeigt sie dieselbe Szene aus verschiedenen emotionalen Blickwinkeln.",
       instructions: [
-        "Szene spielen.",
-        "Wiederholung streng aus Sicht A.",
-        "Wiederholung streng aus Sicht B."
+        "Eine kurze Konfliktszene (Streit um etwas) wird einmal 'neutral' oder objektiv gespielt.",
+        "**Wiederholung 1:** Die Szene wird streng aus der subjektiven Sicht von Person A (z.B. Opfer) wiederholt. Die Darstellung darf verzerrt sein, so wie A es 'gefühlt' hat (B wirkt riesig und aggressiv, A wirkt klein und hilflos).",
+        "**Wiederholung 2:** Die Szene wird streng aus der subjektiven Sicht von Person B (z.B. Täter) wiederholt. B sieht sich vielleicht als gerechtfertigt, ruhig oder provoziert.",
+        "Diskussion: Wie verändern Emotionen unsere Wahrnehmung der Realität?"
       ],
-      variations: ["Beobachter-Perspektive."]
+      variations: ["Eine dritte Version aus Sicht einer unbeteiligten Beobachtung."]
     }
   },
   {
     id: "push-not-win",
     title: "Push not to win",
     category: "Körperarbeit",
-    duration: "10 Min",
+    duration: "10-15 Min",
     tags: ["Körperarbeit", "Dialektik"],
     attributes: { focus: "intro", energy: "high", level: "beginner" },
     content: {
-      context: "Dynamisches Gleichgewicht statt Sieg.",
+      context: "Eine körperliche Übung für dialektische Beziehungen. Sie lehrt, dass Widerstand nicht immer bedeutet, den anderen zu besiegen, sondern dass es um ein dynamisches Gleichgewicht geht.",
       instructions: [
-        "Paare schieben gegeneinander.",
-        "Wenn Partner*in fällt, sofort stützen/nachgeben.",
-        "Gemeinsamer Widerstand."
+        "Die Gruppe bildet Paare. Die Partner*innen stehen sich gegenüber und legen ihre Hände auf die Schultern des/der anderen.",
+        "Auf ein Signal hin beginnen beide, gegeneinander zu schieben. Beide wollen Raum gewinnen.",
+        "Die entscheidende Regel lautet: **'Schiebe nicht, um zu gewinnen'**. Das Ziel ist nicht, den/die Partner*in zu Boden zu werfen.",
+        "Sobald jemand spürt, dass der/die Partner*in das Gleichgewicht verliert, muss er/sie sofort die Kraft nachlassen und den/die Partner*in stützen.",
+        "Es entsteht ein dynamisches Spiel aus Druck und Gegendruck, aus Angriff und Fürsorge."
       ],
-      variations: ["Rücken an Rücken."]
+      variations: ["Schieben Rücken an Rücken.", "Mit geschlossenen Augen (erhöht die Sensibilität)."]
     }
   },
   {
     id: "cops-in-head",
     title: "Der Polizist im Kopf",
     category: "Rainbow of Desire",
-    duration: "45 Min",
+    duration: "45-60 Min",
     tags: ["Psychologie", "Blockaden", "Internalisierung"],
     attributes: { focus: "intro", energy: "low", level: "advanced" },
     content: {
-      context: "Internalisierte Unterdrückung sichtbar machen.",
+      context: "Diese Technik aus dem Theater der Unterdrückten macht internalisierte Unterdrückung sichtbar. Wir untersuchen die Stimmen, die uns am Handeln hindern, auch wenn keine äußere Gefahr droht.",
       instructions: [
-        "Protagonist*in zeigt Blockade-Situation.",
-        "Schauspielende verkörpern die inneren Stimmen ('Du kannst das nicht').",
-        "Kampf gegen die Stimmen."
+        "Ein*e Protagonist*in spielt eine Szene aus dem eigenen Leben, in der er/sie gerne gehandelt hätte, aber blockiert war.",
+        "Wir identifizieren die Sätze der Blockade ('Du bist zu dumm', 'Sei brav', 'Männer weinen nicht').",
+        "Schauspielende aus der Gruppe verkörpern diese Stimmen als 'Polizisten'. Sie umringen den Protagonisten, flüstern ihm die Sätze zu oder halten ihn körperlich fest.",
+        "Der/Die Protagonist*in muss nun versuchen, die Szene erneut zu spielen und sich dabei physisch und verbal gegen die Polizisten durchzusetzen.",
+        "Ziel ist die Rückgewinnung der Handlungsfähigkeit."
       ],
-      variations: ["Gute Polizisten."]
+      variations: ["Suche nach 'Guten Polizisten' (Ressourcen/Unterstützer)."]
     }
   },
   {
     id: "rainbow-desire",
     title: "Regenbogen der Wünsche",
     category: "Rainbow of Desire",
-    duration: "45 Min",
-    tags: ["Gefühle", "Komplexität"],
+    duration: "45-60 Min",
+    tags: ["Gefühle", "Komplexität", "Psychodrama"],
     attributes: { focus: "intro", energy: "low", level: "advanced" },
     content: {
-      context: "Komplexität innerer Wünsche zeigen.",
+      context: "Eine der tiefgehendsten Methoden Boals. Sie zerlegt eine Handlung in ihre emotionalen Bestandteile, um innere Widersprüche sichtbar zu machen.",
       instructions: [
-        "Szene stoppen.",
-        "Alle widersprüchlichen Wünsche benennen.",
-        "Schauspielende verkörpern je einen Wunsch extrem."
+        "1. Eine Konfliktszene wird gespielt und an einem Höhepunkt gestoppt.",
+        "2. Der/Die Protagonist*in wird gefragt: **'Was willst du in diesem Moment tun?'**. Er/Sie nennt alle, auch widersprüchliche Wünsche (z.B. 'Ich will zuschlagen', 'Ich will weglaufen', 'Ich will geliebt werden').",
+        "3. Für jeden genannten Wunsch tritt eine Person aus der Gruppe auf und verkörpert *nur* diesen Wunsch in extremer, körperlicher Form (Allegorie).",
+        "4. Die verschiedenen 'Wünsche' interagieren nun mit dem Antagonisten. Der Protagonist sieht sein komplexes Innenleben als Szene vor sich.",
+        "5. Analyse: Welcher Wunsch ist dominant? Welcher wird unterdrückt?"
       ],
-      variations: ["Wünsche interagieren."]
+      variations: ["Der Protagonist versucht, seine Wünsche zu ordnen oder wie ein Dirigent zu steuern."]
     }
   },
   {
@@ -484,108 +531,132 @@ const EXERCISE_DB = [
     tags: ["Feindbild", "Verständnis"],
     attributes: { focus: "intro", energy: "low", level: "advanced" },
     content: {
-      context: "Gegner verstehen lernen.",
+      context: "Hilft, Strategien gegen Unterdrückende zu entwickeln, indem man versucht, sie nicht nur als Feindbild, sondern in ihrer eigenen Logik zu verstehen.",
       instructions: [
-        "Bild des Gegners aus eigener Sicht (Monster).",
-        "Bild des Gegners aus dessen Sicht (Held/Opfer).",
-        "Vergleich."
+        "1. Der/Die Protagonist*in formt eine Statue des/der Antagonist*in, so wie er/sie ihn subjektiv wahrnimmt (oft als Monster, kalt oder brutal).",
+        "2. **Perspektivwechsel:** Der/Die Protagonist*in wird gebeten, ein Bild des/der Antagonist*in zu formen, *so wie dieser sich selbst sehen könnte* (z.B. als missverstandener Held, Opfer der Umstände, pflichtbewusst).",
+        "3. Die beiden Bilder werden nebeneinander gestellt. Wo liegen die Unterschiede? Wo sind die blinden Flecken?",
+        "Dies dient als Vorbereitung für das Forumtheater, um realistischere Interventionen zu finden."
       ],
-      variations: ["Dritte Perspektive."]
+      variations: ["Einbeziehung von Bildern, wie Dritte (z.B. Kollegen) die Person sehen."]
     }
   },
+
+  // KATEGORIE 6: SCHAUSPIEL-TECHNIK
   {
     id: "walking-grid",
-    title: "Walking the Grid",
-    category: "Viewpoints",
-    duration: "15 Min",
+    title: "Walking the Grid (Viewpoints)",
+    category: "Schauspiel-Technik",
+    duration: "15-20 Min",
     tags: ["Raum", "Präsenz", "Geometrie"],
     attributes: { focus: "extra", energy: "low", level: "advanced" },
     content: {
-      context: "Raumbewusstsein schärfen.",
+      context: "Eine grundlegende Übung aus der Viewpoints-Methode (Bogart/Landau), die das Bewusstsein für den Raum, Architektur und geometrische Beziehungen schärft.",
       instructions: [
-        "Gehen nur in 90-Grad-Winkeln.",
-        "Klare Entscheidungen für Stopp und Drehung.",
-        "Soft Focus."
+        "Die Gruppe bewegt sich im Raum. Die Vorgabe ist, sich ausschließlich in geraden Linien zu bewegen und nur im 90-Grad-Winkel abzubiegen (wie auf einem Schachbrett).",
+        "Die Teilnehmenden sollen ein Bewusstsein für die Linien im Raum entwickeln (parallel zu Wänden).",
+        "Jeder Stopp, jede Drehung und jeder Tempowechsel soll eine klare, bewusste Entscheidung sein, kein Zufall.",
+        "Einen 'Soft Focus' beibehalten: Nicht auf eine Person starren, sondern den ganzen Raum im Blick haben.",
+        "Ziel ist es, eine hohe Wachheit für die räumliche Komposition zu entwickeln und sich als Teil eines größeren Bildes zu begreifen."
       ],
-      variations: ["Tempowechsel."]
+      variations: ["Einführung von extremen Tempowechseln.", "Hinzufügen von Gesten an den Wendepunkten."]
     }
   },
   {
     id: "7-levels",
-    title: "7 Spannungszustände",
-    category: "Lecoq Technik",
-    duration: "20 Min",
+    title: "Die 7 Spannungszustände (Lecoq)",
+    category: "Schauspiel-Technik",
+    duration: "30-40 Min",
     tags: ["Körper", "Ausdruck", "Skala"],
     attributes: { focus: "extra", energy: "high", level: "advanced" },
     content: {
-      context: "Skala der körperlichen Präsenz.",
+      context: "Diese Skala von Jacques Lecoq hilft Schauspielenden, ihre körperliche Präsenz präzise zu steuern. Die Gruppe bewegt sich nacheinander durch alle Stufen:",
       instructions: [
-        "Von 1 (Erschöpft) bis 7 (Tragisch/Versteinert) durch die Zustände gehen."
+        "1. **Erschöpft (Qualle):** Keine Spannung, der Körper ist schwer wie Blei, fast bewegungsunfähig.",
+        "2. **Cool (Kalifornier*in):** Minimale Spannung, alles ist 'easy', lässig, entspannt. Nichts ist wichtig.",
+        "3. **Neutral (Ökonomisch):** Die notwendige Spannung, um präsent zu sein. Keine Geschichte, pure Anwesenheit. Der 'Nullpunkt'.",
+        "4. **Wach (Neugierig):** Erhöhte Aufmerksamkeit, der Blick ist offen, man ist bereit zu reagieren.",
+        "5. **Aktiv/Reaktiv (Drama):** Hohe Spannung, es gibt ein Ziel, Zeitdruck, Konfliktbereitschaft.",
+        "6. **Leidenschaftlich (Oper):** Extreme Spannung, große Emotionen (Wut, Liebe), der Körper vibriert, Gesten werden groß.",
+        "7. **Tragisch (Versteinert):** Die Spannung ist so hoch, dass Bewegung unmöglich wird. Der Körper erstarrt, innerlich zerreißt es ihn."
       ],
-      variations: ["Szenen in Stufe 4 vs Stufe 6."]
+      variations: ["Szenen in unterschiedlichen Zuständen spielen (z.B. Person A in Stufe 2, Person B in Stufe 6)."]
     }
   },
   {
     id: "stick-ball-veil",
-    title: "Stock, Ball, Schleier",
-    category: "Chekhov Technik",
-    duration: "15 Min",
-    tags: ["Charakter", "Bewegung"],
+    title: "Stock, Ball, Schleier (Chekhov)",
+    category: "Schauspiel-Technik",
+    duration: "20 Min",
+    tags: ["Charakter", "Bewegung", "Imagination"],
     attributes: { focus: "intro", energy: "low", level: "advanced" },
     content: {
-      context: "Bewegungszentren und Qualitäten.",
+      context: "Nutzt imaginäre Bilder im Körper, um die Qualität von Bewegungen zu verändern und Charaktere zu finden (nach Michael Chekhov).",
       instructions: [
-        "Bewegen mit Zentrum Kopf (Stock).",
-        "Zentrum Becken (Ball).",
-        "Zentrum Herz/Hülle (Schleier)."
+        "Die Teilnehmenden bewegen sich im Raum und stellen sich vor, dass ihr Bewegungszentrum eine bestimmte Qualität hat:",
+        "**Stock (Denken):** Das Zentrum ist im Kopf/Nacken. Man hat einen Stock verschluckt. Bewegungen sind gerade, direkt, hölzern, linear, analytisch.",
+        "**Ball (Wollen):** Das Zentrum ist im Becken. Ein Energieball treibt an. Bewegungen sind rund, federnd, energisch, impulsiv, erdverbunden.",
+        "**Schleier (Fühlen):** Das Zentrum ist in der Herzgegend, Energie umhüllt den Körper wie ein weicher Schleier oder Nebel. Bewegungen sind fließend, tastend, weich, emotional."
       ],
-      variations: ["Charakterbau."]
+      variations: ["Kombination der Zentren für komplexere Charaktere.", "Alltagshandlungen (Tee trinken) in den drei Qualitäten ausführen."]
     }
   },
   {
     id: "neutral-mask",
     title: "Die Neutrale Maske",
-    category: "Lecoq Technik",
-    duration: "20 Min",
+    category: "Schauspiel-Technik",
+    duration: "30 Min",
     tags: ["Stille", "Präsenz", "Basis"],
     attributes: { focus: "intro", energy: "low", level: "advanced" },
     content: {
-      context: "Nullpunkt des Schauspiels.",
+      context: "Der 'Nullpunkt' des Schauspiels. Es geht darum, persönliche Eigenheiten und Ticks abzulegen, um eine universelle Präsenz zu erreichen.",
       instructions: [
-        "Mit neutraler Maske/Gesicht im Raum sein.",
-        "Keine Geschichte, keine Vergangenheit, nur Präsenz."
+        "Die Teilnehmenden tragen eine neutrale Maske (oder versuchen, das Gesicht vollkommen zu entspannen und ausdruckslos zu halten).",
+        "Aufgabe: Durchquere den Raum. Habe keine Vergangenheit, keine Zukunft, keine Absicht, keinen Konflikt. Nur reines Sein.",
+        "Es ist extrem schwer, 'nichts' zu erzählen. Jede kleine asymmetrische Bewegung wird sichtbar.",
+        "Ziel ist die 'Ökonomie der Bewegung' und das reine Sein im Hier und Jetzt."
       ],
-      variations: ["Begegnung."]
+      variations: ["Begegnung mit einem anderen neutralen Wesen.", "Reaktion auf einen einfachen Impuls (ein Geräusch, Regen) aus der Neutralität heraus."]
     }
   },
   {
     id: "elements",
-    title: "Elemente",
-    category: "Lecoq Technik",
-    duration: "15 Min",
+    title: "Elemente (Lecoq)",
+    category: "Schauspiel-Technik",
+    duration: "20-30 Min",
     tags: ["Verkörperung", "Natur"],
     attributes: { focus: "extra", energy: "high", level: "beginner" },
     content: {
-      context: "Verkörperung von Naturelementen.",
+      context: "Die Verkörperung von Naturelementen ist eine kraftvolle Methode, um neue Bewegungsqualitäten für die Charakterarbeit zu entdecken.",
       instructions: [
-        "Feuer, Wasser, Erde, Luft körperlich darstellen (nicht spielen, sondern sein)."
+        "Die Teilnehmenden bewegen sich im Raum und werden angeleitet, Elemente mit ihrem ganzen Körper zu 'werden' (nicht pantomimisch zu spielen):",
+        "**Feuer:** Schnelle, explosive, zuckende Bewegungen. Staccato, Hitze, verzehrend, nach oben strebend.",
+        "**Wasser:** Fließende, runde, schwere Bewegungen. Stetig, anpassungsfähig, abwärts fließend.",
+        "**Luft:** Leichte, schwebende, chaotische Bewegungen. Schnell, richtungslos, überall im Raum.",
+        "**Erde:** Feste, schwere, stabile Bewegungen. Widerstand, Verwurzelung, langsam, unbeweglich."
       ],
-      variations: ["Materialien."]
+      variations: ["Verkörperung von Materialien (Öl, Kaugummi, Stein, Zellophan).", "Entwicklung eines Charakters, der zu 80% aus 'Feuer' besteht."]
     }
   },
+
+  // KATEGORIE 7: ZEITUNGSTHEATER
   {
     id: "newspaper-theatre",
-    title: "Zeitungstheater",
+    title: "Zeitungstheater (12 Techniken)",
     category: "Politisches Theater",
-    duration: "45 Min",
+    duration: "45-90 Min",
     tags: ["Medien", "Politik", "Textarbeit"],
     attributes: { focus: "extra", energy: "low", level: "advanced" },
     content: {
-      context: "Dekonstruktion von Medien.",
+      context: "Methoden von Augusto Boal, um Zeitungstexte oder Nachrichten szenisch zu dekonstruieren und die Manipulation oder Ideologie darin sichtbar zu machen.",
       instructions: [
-        "Techniken anwenden: Gekreuztes Lesen, Rhythmisches Lesen etc."
+        "Wähle einen aktuellen Artikel. Wende eine der Techniken an:",
+        "**1. Gekreuztes Lesen:** Zwei widersprüchliche Artikel (z.B. über Armut und Luxusleben) werden abwechselnd Zeile für Zeile gelesen.",
+        "**2. Rhythmisches Lesen:** Ein Text wird zu einem völlig unpassenden musikalischen Rhythmus (z.B. gregorianischer Choral oder Samba) gelesen, um den Inhalt zu 'filtern'.",
+        "**3. Ergänzendes Lesen:** Alles, was im Text verschwiegen wird, wird von einer zweiten Person an den passenden Stellen laut hinzugefügt.",
+        "**4. Parallele Handlung:** Der Text wird neutral vorgelesen, während im Hintergrund szenisch die brutale Realität gezeigt wird, die der Text verschleiert."
       ],
-      variations: ["Social Media."]
+      variations: ["Anwendung auf Social-Media-Posts oder Politiker-Reden."]
     }
   }
 ];
