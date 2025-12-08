@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity } from 'lucide-react';
 
 // --- KONFIGURATION ---
-// HIER KANNST DU DEIN BILD ÄNDERN:
-// Wenn du die App veröffentlichst, lade dein Logo hoch und füge den Link hier ein.
-// Zum Testen nutze ich hier einen Platzhalter.
-const LOGO_URL = "/logo.jpg"; // Wenn das Bild im public-Ordner liegt
+// HIER WURDE DIE ENDUNG ANGEPASST:
+const LOGO_URL = "/logo.jpeg"; 
 
 // Farben aus dem Logo
 const BRAND_RED = "#E05D5D";     // Das Rot aus der Gesichtsmaske
@@ -806,7 +804,7 @@ export default function ActAndSwipeApp() {
       <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-md mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-             <img src={LOGO_URL} alt="Politheia Logo" className="h-10 w-auto" />
+             <img src={LOGO_URL} alt="Polithea Logo" className="h-10 w-auto" />
             <h1 className="text-xl font-black tracking-tight text-slate-900">SWIPE & ACT</h1>
           </div>
           {view === 'results' && (
@@ -824,7 +822,7 @@ export default function ActAndSwipeApp() {
         {view === 'start' && (
           <div className="flex flex-col items-center justify-center h-full pt-16 px-6 animate-fadeIn text-center">
             <div className="mb-8 w-40 h-40 mx-auto flex items-center justify-center">
-                <img src={LOGO_URL} alt="Politheia Logo" className="w-full h-full object-contain" />
+                <img src={LOGO_URL} alt="Polithea Logo" className="w-full h-full object-contain" />
             </div>
             <h2 className="text-2xl font-bold mb-4 text-slate-900 leading-tight">
               Du bereitest die Probe vor und suchst die passenden Spiele und Übungen?
@@ -838,7 +836,7 @@ export default function ActAndSwipeApp() {
             >
               Starten <ArrowRight className="ml-2" />
             </button>
-            <p className="mt-8 text-xs text-slate-400">Powered by Politheia Osnabrück • Version 1.0</p>
+            <p className="mt-8 text-xs text-slate-400">Powered by Polithea Osnabrück • Version 1.0</p>
           </div>
         )}
 
