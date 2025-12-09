@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle, Heart, Share2, Printer, Menu, Library, Home, Shield, Mic, FileText, Map, Lightbulb, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Dice5, AlertCircle } from 'lucide-react';
+import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle, Heart, Share2, Printer, Menu, Library, Home, Shield, Mic, FileText, Map, Lightbulb, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Dice5, AlertCircle, Drama } from 'lucide-react';
 
 // --- KONFIGURATION ---
-const LOGO_URL = "https://www.polithea.de/wp-content/uploads/2020/09/Polithea_Logo_RGB-150x150.png";
+// Ändere dies zu "/logo.jpeg" für lokale Dateien oder füge die volle GitHub-URL ein.
+// Beispiel GitHub: "https://raw.githubusercontent.com/DEIN-USER/DEIN-REPO/main/public/logo.jpeg"
+const LOGO_URL = "https://raw.githubusercontent.com/DEIN-USER-NAME/swipe-act/main/public/logo.jpeg"; 
 
 // --- HELPER: Textformatierung ---
 const renderTextWithBold = (text) => {
@@ -740,14 +742,26 @@ const KNOWLEDGE_BASE = {
     { 
       title: "Regenbogen der Wünsche", 
       subtitle: "Die therapeutische Dimension",
-      desc: "Diese Methode untersucht internalisierte Unterdrückung ('Polizisten im Kopf'). Wenn keine äußere Unterdrückung sichtbar ist, wir aber trotzdem nicht handeln können, liegt das Problem innen. Komplexe Emotionen werden in einzelne Farben (Wünsche/Ängste) zerlegt und von Schauspielern verkörpert.",
+      desc: "Der Überbegriff für Boals introspektive Methoden, aber auch eine spezifische Technik. Hier werden komplexe, widersprüchliche Gefühle (das Wollen und das Nicht-Wollen) in einzelne Farben/Elemente zerlegt und von Schauspielern verkörpert, um das innere Chaos sichtbar und bearbeitbar zu machen.",
       steps: [
-        "**Szene:** Ein Protagonist zeigt eine persönliche Blockade.",
-        "**Analyse:** Welche 'Stimmen' oder Gefühle hindern ihn?",
-        "**Verkörperung:** Schauspieler spielen diese Stimmen oder Wünsche als eigene Personen.",
-        "**Konfrontation:** Der Protagonist kämpft gegen sein eigenes Innenleben oder versucht, es zu ordnen."
+        "**Szene:** Eine Blockade wird gespielt.",
+        "**Zerlegung:** Der Protagonist identifiziert verschiedene Gefühle/Wünsche in sich.",
+        "**Verkörperung:** Jedes Gefühl wird zu einer Figur.",
+        "**Dialog:** Der Protagonist tritt in Dialog mit seinen eigenen Wünschen."
       ],
-      goal: "Psychologische Blockaden überwinden, um politisch handlungsfähig zu werden."
+      goal: "Psychologische Blockaden verstehen und die eigene Willenskraft stärken."
+    },
+    { 
+      title: "Der Polizist im Kopf", 
+      subtitle: "Internalisierte Unterdrückung",
+      desc: "Oft hindert uns nicht ein echter Polizist am Handeln, sondern der 'Polizist im Kopf' – internalisierte Regeln, Verbote und Stimmen der Gesellschaft (Eltern, Lehrer, Medien). Diese Technik macht diese unsichtbaren Stimmen sichtbar, um sie zu entlarven und zu besiegen.",
+      steps: [
+        "**Situation:** Ein Moment der Handlungsunfähigkeit.",
+        "**Detektion:** Wer spricht da im Kopf? (Du bist zu dumm, das macht man nicht).",
+        "**Verkörperung:** Schauspieler spielen diese Stimmen als 'Polizisten'.",
+        "**Konfrontation:** Der Protagonist lernt, sich gegen die Stimmen zu wehren."
+      ],
+      goal: "Befreiung von internalisierten Zwängen."
     },
     { 
       title: "Legislatives Theater", 
@@ -1265,6 +1279,7 @@ export default function ActAndSwipeApp() {
   const [filteredGames, setFilteredGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
   const [favorites, setFavorites] = useState([]);
+  const [logoError, setLogoError] = useState(false); 
 
   useEffect(() => {
     const savedFavs = localStorage.getItem('polithea_favs');
@@ -1359,18 +1374,23 @@ export default function ActAndSwipeApp() {
           <div className="flex flex-col h-full text-white p-6 justify-center">
              <header className="mb-12 flex flex-col items-start">
                 <div className="flex items-center gap-3 mb-4">
+                  {/* LOCAL FILE FIX: Only shows error placeholder if local file is missing */}
                   <img 
                     src={LOGO_URL} 
                     alt="Polithea Logo" 
                     className="h-16 w-auto rounded-md shadow-lg" 
-                    onError={(e) => {e.target.style.display='none'}} 
+                    onError={(e) => {
+                        // If local file fails (e.g. in preview), hide it so no broken image icon shows
+                        e.target.style.display='none'; 
+                    }} 
                   />
+                  {/* Fallback visual if image is hidden/missing in preview */}
                   <span className="text-2xl font-bold text-slate-300">Polithea</span>
                 </div>
                 <h1 className="text-5xl font-black tracking-tighter mb-2 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500">
                 TdU-Match
                 </h1>
-                <p className="text-slate-400 text-lg font-medium">Dein digitaler Proben-Assistent.</p>
+                <p className="text-slate-400 text-lg font-medium">Dein Werkzeugkasten für transformatives Theater.</p>
             </header>
 
             <main className="flex flex-col gap-6">
@@ -1378,7 +1398,9 @@ export default function ActAndSwipeApp() {
                     <div className="absolute -right-4 -top-4 text-slate-700/30 group-hover:text-slate-700/50 transition-colors">
                         <Dice5 size={140} />
                     </div>
-                    <h2 className="text-2xl font-bold mb-6 relative z-10">Dein Werkzeugkasten für transformatives Theater.</h2>
+                    {/* H2 Removed per user request */}
+                    <div className="mb-6 relative z-10"></div> 
+
                     <button 
                         onClick={handleStart}
                         className="w-full relative z-10 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-bold py-4 px-6 rounded-xl shadow-lg transform transition active:scale-95 flex items-center justify-center gap-3 mb-3"
