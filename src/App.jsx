@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle, Heart, Share2, Printer, Menu, Library, Home, Shield, Mic, FileText, Map, Lightbulb, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Dice5, AlertCircle } from 'lucide-react';
 
 // --- KONFIGURATION ---
-const LOGO_URL = "https://www.polithea.de/wp-content/uploads/2020/09/Polithea_Logo_RGB-150x150.png"; // Beispiel-URL oder lokal "/logo.jpeg"
+const LOGO_URL = "https://www.polithea.de/wp-content/uploads/2020/09/Polithea_Logo_RGB-150x150.png";
 
 // --- HELPER: Textformatierung ---
 const renderTextWithBold = (text) => {
@@ -77,7 +77,7 @@ const EXERCISE_DB = [
       variations: ["**Status-Wechsel:** Auf Kommando 'Wechsel!' dreht sich die Hierarchie um (1 wird 10).", "**Hochmut:** Alle haben Status 10 auf engstem Raum (führt zu maximalem Konflikt)."]
     }
   },
-   
+    
   // --- KATEGORIE: AUFWÄRMEN & ENERGIE ---
   {
     id: "samurai",
@@ -407,7 +407,7 @@ const EXERCISE_DB = [
       variations: ["Rückwärts zählen.", "Bis zur Anzahl der Gruppenteilnehmer zählen."]
     }
   },
-   
+    
   // --- KATEGORIE: IMAGE THEATRE (PRAXIS) ---
   {
     id: "great-game-power",
@@ -503,7 +503,7 @@ const EXERCISE_DB = [
       variations: ["Statuswechsel innerhalb der Szene erzwingen."]
     }
   },
-   
+    
   // --- KATEGORIE: KONFLIKT & FORUM (PRAXIS) ---
   {
     id: "rashomon",
@@ -542,7 +542,7 @@ const EXERCISE_DB = [
       variations: ["Schieben Rücken an Rücken.", "Mit geschlossenen Augen (erhöht die Sensibilität)."]
     }
   },
-   
+    
   // --- KATEGORIE: RAINBOW (PRAXIS) ---
   {
     id: "cops-in-head",
@@ -816,9 +816,9 @@ const SwipeCard = ({ step, onSwipe, direction }) => {
   ];
 
   const currentCard = cards[step];
-  
+   
   let cardClass = `absolute inset-0 w-full h-full rounded-2xl shadow-2xl flex flex-col items-center justify-center p-6 text-center transition-all duration-500 ease-out transform bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700`;
-  
+   
   if (direction === 'left') {
     cardClass += " -translate-x-full rotate-[-20deg] opacity-0";
   } else if (direction === 'right') {
@@ -954,7 +954,7 @@ const ResultsView = ({ results, onReset, onSelect }) => {
 // --- VIEW: KATALOG ---
 const CatalogView = ({ onSelect }) => {
   const categories = [...new Set(EXERCISE_DB.map(g => g.category))];
-  
+   
   return (
     <div className="w-full max-w-2xl mx-auto p-4 animate-fadeIn pb-24">
       <h2 className="text-2xl font-bold text-slate-800 mb-6">Alle Spiele</h2>
@@ -1017,7 +1017,7 @@ const TheoryView = () => {
     <div className="w-full max-w-2xl mx-auto p-4 animate-fadeIn pb-24">
       <h2 className="text-2xl font-bold text-slate-800 mb-2">Kompendium</h2>
       <p className="text-slate-500 mb-6 text-sm">Das gesammelte Wissen des Theaters der Unterdrückten.</p>
-      
+       
       {/* TABS SCROLLABLE CONTAINER */}
       <div className="relative mb-6 group">
         {/* Scroll Buttons */}
@@ -1112,7 +1112,7 @@ const FavoritesView = ({ favorites, onSelect, onRemove }) => {
 
       <div className="hidden print:block mb-8 text-center">
         <h1 className="text-3xl font-bold">Workshop-Plan</h1>
-        <p>Erstellt mit Polithea Swipe & Act</p>
+        <p>Erstellt mit Polithea TdU-Match</p>
       </div>
 
       {favorites.length === 0 ? (
@@ -1189,14 +1189,14 @@ const DetailModal = ({ game, onClose, isFavorite, toggleFavorite }) => {
             {game.category}
           </span>
           <h2 className="text-3xl font-black text-slate-900 mb-2 leading-tight">{game.title}</h2>
-          
+           
           {game.duration && (
              <div className="flex items-center text-slate-500 text-sm mb-6 font-medium">
                <Clock size={16} className="mr-1.5" />
                <span>{game.duration}</span>
              </div>
           )}
-          
+           
           <div className="flex flex-wrap gap-2 mb-8">
             {game.tags.map((tag, i) => (
               <span key={i} className="text-xs font-bold px-3 py-1.5 bg-slate-100 text-slate-600 rounded-full">
@@ -1321,7 +1321,7 @@ export default function ActAndSwipeApp() {
       const matchLevel = game.attributes.level === finalFilters.level;
       return matchFocus && matchEnergy && matchLevel;
     });
-    
+     
     let finalResults = results;
     if (results.length === 0) {
         finalResults = EXERCISE_DB.filter(game => {
@@ -1358,14 +1358,17 @@ export default function ActAndSwipeApp() {
         {view === 'start' && (
           <div className="flex flex-col h-full text-white p-6 justify-center">
              <header className="mb-12 flex flex-col items-start">
-                <img 
-                  src={LOGO_URL} 
-                  alt="Polithea Logo" 
-                  className="h-16 w-auto mb-4 rounded-md shadow-lg" 
-                  onError={(e) => {e.target.style.display='none'}} 
-                />
+                <div className="flex items-center gap-3 mb-4">
+                  <img 
+                    src={LOGO_URL} 
+                    alt="Polithea Logo" 
+                    className="h-16 w-auto rounded-md shadow-lg" 
+                    onError={(e) => {e.target.style.display='none'}} 
+                  />
+                  <span className="text-2xl font-bold text-slate-300">Polithea</span>
+                </div>
                 <h1 className="text-5xl font-black tracking-tighter mb-2 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500">
-                SWIPE & ACT
+                TdU-Match
                 </h1>
                 <p className="text-slate-400 text-lg font-medium">Dein digitaler Proben-Assistent.</p>
             </header>
@@ -1375,7 +1378,7 @@ export default function ActAndSwipeApp() {
                     <div className="absolute -right-4 -top-4 text-slate-700/30 group-hover:text-slate-700/50 transition-colors">
                         <Dice5 size={140} />
                     </div>
-                    <h2 className="text-2xl font-bold mb-6 relative z-10">Was probst du heute?</h2>
+                    <h2 className="text-2xl font-bold mb-6 relative z-10">Dein Werkzeugkasten für transformatives Theater.</h2>
                     <button 
                         onClick={handleStart}
                         className="w-full relative z-10 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-bold py-4 px-6 rounded-xl shadow-lg transform transition active:scale-95 flex items-center justify-center gap-3 mb-3"
