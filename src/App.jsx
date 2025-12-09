@@ -1,23 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle, Heart, Share2, Printer, Menu, Library, Home, Shield, Mic, FileText, Map, Lightbulb, ChevronUp, ChevronDown } from 'lucide-react';
-
-// --- KONFIGURATION ---
-const LOGO_URL = "/logo.jpeg"; 
-
-// Farben (Polithea Design)
-const BRAND_RED = "#E05D5D";      
-const BRAND_YELLOW = "#FFD700";   
-const BRAND_ORANGE = "#FF8C00";   
-const BRAND_BLACK = "#1a1a1a";    
-
-// Tailwind Klassen
-const PRIMARY_COLOR = "bg-[#E05D5D]"; 
-const PRIMARY_COLOR_HOVER = "hover:bg-[#c94545]";
-const PRIMARY_TEXT_COLOR = "text-[#E05D5D]";
-const ACCENT_COLOR_BG = "bg-[#FFD700]/10"; 
-const ACCENT_COLOR_BORDER = "border-[#FFD700]/40";
-const SELECTION_COLOR = "selection:bg-[#E05D5D]/30";
-const GRADIENT_BG = "bg-gradient-to-br from-[#FFD700] via-[#FFB347] to-[#FF8C00]"; 
+import React, { useState, useEffect, useRef } from 'react';
+import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle, Heart, Share2, Printer, Menu, Library, Home, Shield, Mic, FileText, Map, Lightbulb, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Dice5 } from 'lucide-react';
 
 // --- HELPER: Textformatierung ---
 const renderTextWithBold = (text) => {
@@ -25,13 +7,13 @@ const renderTextWithBold = (text) => {
   const parts = text.split(/(\*\*.*?\*\*)/g);
   return parts.map((part, index) => {
     if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={index} className="font-bold text-slate-900">{part.slice(2, -2)}</strong>;
+      return <strong key={index} className="font-bold text-slate-800">{part.slice(2, -2)}</strong>;
     }
     return part;
   });
 };
 
-// --- VOLLSTÄNDIGE DATENBANK (TEIL B - PRAKTISCHE ÜBUNGEN) ---
+// --- DATENBANK (VOLLSTÄNDIG) ---
 const EXERCISE_DB = [
   // --- KATEGORIE: HIGH ENERGY & KOMPLEX ---
   {
@@ -695,9 +677,8 @@ const EXERCISE_DB = [
   }
 ];
 
-// --- THEORY DATABASE (INTERNES KOMPENDIUM - ERWEITERT & STRUKTURIERT) ---
+// --- THEORY DATABASE ---
 const KNOWLEDGE_BASE = {
-  // DIE 5 SÄULEN (GROSSFORMEN) - Gleichberechtigt dargestellt
   forms: [
     { 
       title: "Bildertheater (Image Theatre)", 
@@ -773,7 +754,6 @@ const KNOWLEDGE_BASE = {
       goal: "Direkte Demokratie. Der Bürger wird zum Gesetzgeber."
     }
   ],
-  // ZEITUNGSTHEATER (SPEZIAL-TAB)
   newspaper: [
     { title: "1. Einfaches Lesen", desc: "Ein Artikel wird vorgelesen, aber vom Kontext gelöst (z.B. eine Kriegserklärung wird mit der Betonung eines Kochrezepts oder einer Liebeserklärung vorgelesen)." },
     { title: "2. Gekreuztes Lesen", desc: "Zwei Artikel mit widersprüchlichen Informationen (oder aus verschiedenen Zeitungen) werden abwechselnd Zeile für Zeile vorgelesen, was neue, oft absurde Zusammenhänge schafft." },
@@ -788,7 +768,6 @@ const KNOWLEDGE_BASE = {
     { title: "11. Feld-Interview", desc: "Die Figuren, die im Artikel vorkommen, werden auf der Bühne 'interviewt', um ihre wahren Motive zu enthüllen." },
     { title: "12. Verhör", desc: "Der Autor des Artikels wird 'verhört': Warum hat er das geschrieben? Wer bezahlt ihn? Was hat er weggelassen?" }
   ],
-  // PHILOSOPHIE
   philosophy: [
     { title: "Spect-Actor (Zuschau-Spieler)", desc: "Der zentrale Begriff bei Boal. Wir sind keine passiven Zuschauer (Spectators), die nur konsumieren, sondern handelnde Akteure (Actors). Im TdU wird die Trennung zwischen Bühne und Saal aufgehoben. Jeder ist Experte seines eigenen Lebens und kann eingreifen." },
     { title: "Maieutik (Hebammenkunst)", desc: "Der Joker ist kein Lehrer, der Wissen eintrichtert ('Banking Concept' nach Freire). Er ist wie Sokrates eine 'Hebamme', die hilft, das Wissen, das die Gruppe bereits in sich trägt, zur Welt zu bringen. Er stellt Fragen, statt Antworten zu geben." },
@@ -797,7 +776,6 @@ const KNOWLEDGE_BASE = {
     { title: "Metaxis", desc: "Der Zustand, in zwei Welten gleichzeitig zu sein: Der Realität der eigenen Person und der Fiktion der Rolle. Dies ermöglicht uns, im Schutz der Fiktion reale Lösungen zu probieren, ohne die vollen Konsequenzen tragen zu müssen." },
     { title: "Osmose", desc: "Das Ziel ist nicht das Theaterstück selbst. Das Ziel ist, dass die Erfahrungen von der Bühne (der Mut, das Eingreifen) durch die 'Poren' in das reale Leben der Teilnehmenden sickern (Osmose)." }
   ],
-  // JOKER & SAFETY
   joker: [
     { title: "Fragen statt Sagen", desc: "Ein Joker gibt keine Antworten. Wenn die Gruppe fragt: 'War das gut so?', fragt der Joker zurück: 'Was hat das Publikum gesehen?' oder 'Hat es das Problem gelöst?'" },
     { title: "Allparteilichkeit", desc: "Du bist auf keiner Seite, sondern auf der Seite des demokratischen Prozesses. Du musst auch den Antagonisten (den 'Bösen') vor unsachlichen Angriffen schützen, damit die Analyse sauber bleibt." },
@@ -822,28 +800,28 @@ const SwipeCard = ({ step, onSwipe, direction }) => {
       step: 0,
       title: "Wonach suchst du?",
       icon: <Brain size={48} className="text-white mb-4" />,
-      left: { label: "Innenwelt", desc: "Gefühle, Psychologie", val: "intro", color: PRIMARY_COLOR },
-      right: { label: "Außenwelt", desc: "Körper, Raum, Politik", val: "extra", color: PRIMARY_COLOR }
+      left: { label: "Innenwelt", desc: "Gefühle, Psychologie", val: "intro", color: 'bg-pink-600' },
+      right: { label: "Außenwelt", desc: "Körper, Raum, Politik", val: "extra", color: 'bg-violet-600' }
     },
     {
       step: 1,
       title: "Energielevel?",
       icon: <Activity size={48} className="text-white mb-4" />,
-      left: { label: "Fokussiert", desc: "Konzentration, Analyse", val: "low", color: PRIMARY_COLOR },
-      right: { label: "Aktivierend", desc: "Bewegung, Chaos", val: "high", color: PRIMARY_COLOR }
+      left: { label: "Fokussiert", desc: "Konzentration, Analyse", val: "low", color: 'bg-blue-600' },
+      right: { label: "Aktivierend", desc: "Bewegung, Chaos", val: "high", color: 'bg-orange-600' }
     },
     {
       step: 2,
       title: "Erfahrung der Gruppe?",
       icon: <Layers size={48} className="text-white mb-4" />,
-      left: { label: "Anfänger", desc: "Warm-up, Kennenlernen", val: "beginner", color: PRIMARY_COLOR },
-      right: { label: "Fortgeschritten", desc: "Szenisch, Komplex", val: "advanced", color: PRIMARY_COLOR }
+      left: { label: "Anfänger", desc: "Warm-up, Kennenlernen", val: "beginner", color: 'bg-green-600' },
+      right: { label: "Fortgeschritten", desc: "Szenisch, Komplex", val: "advanced", color: 'bg-purple-600' }
     }
   ];
 
   const currentCard = cards[step];
   
-  let cardClass = `absolute inset-0 w-full h-full rounded-2xl shadow-2xl flex flex-col items-center justify-center p-6 text-center transition-all duration-500 ease-out transform ${GRADIENT_BG}`;
+  let cardClass = `absolute inset-0 w-full h-full rounded-2xl shadow-2xl flex flex-col items-center justify-center p-6 text-center transition-all duration-500 ease-out transform bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700`;
   
   if (direction === 'left') {
     cardClass += " -translate-x-full rotate-[-20deg] opacity-0";
@@ -856,21 +834,23 @@ const SwipeCard = ({ step, onSwipe, direction }) => {
   return (
     <div className="relative w-full max-w-md h-[450px] mx-auto mt-8 perspective-1000">
       <div className={cardClass}>
-        <div className="bg-black/10 p-4 rounded-full mb-4">
+        <div className="bg-white/10 p-4 rounded-full mb-4">
           {currentCard.icon}
         </div>
-        <h2 className="text-3xl font-bold text-slate-900 mb-8">{currentCard.title}</h2>
+        <h2 className="text-3xl font-black text-white mb-8 tracking-tight">{currentCard.title}</h2>
         
-        <div className="absolute bottom-0 left-0 w-1/2 h-full flex flex-col justify-end p-4 bg-gradient-to-t from-black/20 to-transparent rounded-bl-2xl">
-           <ArrowLeft className="text-slate-900 opacity-60 mb-2" />
-           <span className="text-slate-900 font-bold text-lg text-left">{currentCard.left.label}</span>
-           <span className="text-slate-800 text-xs text-left">{currentCard.left.desc}</span>
+        {/* Left Indicator Overlay */}
+        <div className="absolute bottom-0 left-0 w-1/2 h-full flex flex-col justify-end p-6 bg-gradient-to-t from-black/60 to-transparent rounded-bl-2xl">
+           <ArrowLeft className="text-white opacity-80 mb-2" />
+           <span className="text-white font-bold text-xl text-left">{currentCard.left.label}</span>
+           <span className="text-slate-300 text-sm text-left">{currentCard.left.desc}</span>
         </div>
 
-        <div className="absolute bottom-0 right-0 w-1/2 h-full flex flex-col items-end justify-end p-4 bg-gradient-to-t from-black/20 to-transparent rounded-br-2xl">
-           <ArrowRight className="text-slate-900 opacity-60 mb-2" />
-           <span className="text-slate-900 font-bold text-lg text-right">{currentCard.right.label}</span>
-           <span className="text-slate-800 text-xs text-right">{currentCard.right.desc}</span>
+        {/* Right Indicator Overlay */}
+        <div className="absolute bottom-0 right-0 w-1/2 h-full flex flex-col items-end justify-end p-6 bg-gradient-to-t from-black/60 to-transparent rounded-br-2xl">
+           <ArrowRight className="text-white opacity-80 mb-2" />
+           <span className="text-white font-bold text-xl text-right">{currentCard.right.label}</span>
+           <span className="text-slate-300 text-sm text-right">{currentCard.right.desc}</span>
         </div>
       </div>
 
@@ -878,14 +858,14 @@ const SwipeCard = ({ step, onSwipe, direction }) => {
       <div className="absolute -bottom-24 left-0 w-full flex justify-between px-4">
         <button 
           onClick={() => onSwipe('left', currentCard.left.val)}
-          className={`flex-1 mr-4 py-4 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 flex flex-col items-center justify-center ${PRIMARY_COLOR} ${PRIMARY_COLOR_HOVER}`}
+          className={`flex-1 mr-4 py-4 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 flex flex-col items-center justify-center ${currentCard.left.color} hover:brightness-110`}
         >
           <ArrowLeft size={24} className="mb-1" />
           {currentCard.left.label}
         </button>
         <button 
           onClick={() => onSwipe('right', currentCard.right.val)}
-          className={`flex-1 ml-4 py-4 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 flex flex-col items-center justify-center ${PRIMARY_COLOR} ${PRIMARY_COLOR_HOVER}`}
+          className={`flex-1 ml-4 py-4 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 flex flex-col items-center justify-center ${currentCard.right.color} hover:brightness-110`}
         >
           <ArrowRight size={24} className="mb-1" />
           {currentCard.right.label}
@@ -895,6 +875,7 @@ const SwipeCard = ({ step, onSwipe, direction }) => {
   );
 };
 
+// --- VIEW: RESULTS ---
 const ResultsView = ({ results, onReset, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -904,10 +885,10 @@ const ResultsView = ({ results, onReset, onSelect }) => {
   );
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4 animate-fadeIn">
-      <div className="flex justify-between items-center mb-4">
+    <div className="w-full max-w-2xl mx-auto p-4 animate-fadeIn pb-24">
+      <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-slate-800">Ergebnisse ({filteredResults.length})</h2>
-        <button onClick={onReset} className={`flex items-center text-sm font-medium text-slate-500 hover:${PRIMARY_TEXT_COLOR}`}>
+        <button onClick={onReset} className="flex items-center text-sm font-medium text-slate-500 hover:text-pink-600 transition-colors">
           <RefreshCw size={16} className="mr-1" /> Neustart
         </button>
       </div>
@@ -919,17 +900,17 @@ const ResultsView = ({ results, onReset, onSelect }) => {
         </div>
         <input
           type="text"
-          placeholder="Suche nach Spiel oder Tag..."
+          placeholder="Suche..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#E05D5D] focus:border-transparent sm:text-sm transition-all shadow-sm"
+          className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all shadow-sm"
         />
       </div>
 
       {filteredResults.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-slate-200">
           <p className="text-slate-500 mb-4">Keine Übungen gefunden.</p>
-          <button onClick={onReset} className={`px-6 py-2 ${PRIMARY_COLOR} text-white rounded-lg ${PRIMARY_COLOR_HOVER}`}>
+          <button onClick={onReset} className="px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors">
             Alles zurücksetzen
           </button>
         </div>
@@ -939,29 +920,29 @@ const ResultsView = ({ results, onReset, onSelect }) => {
             <div 
               key={game.id} 
               onClick={() => onSelect(game)}
-              className={`bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-[#FFDE59] cursor-pointer transition-all group`}
+              className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-pink-300 cursor-pointer transition-all group"
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className={`text-lg font-bold text-slate-800 group-hover:${PRIMARY_TEXT_COLOR} transition-colors`}>
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-pink-600 transition-colors">
                     {game.title}
                   </h3>
                   <div className="flex items-center text-sm text-slate-500 mb-2">
-                    <span className="mr-3">{game.category}</span>
+                    <span className="mr-3 font-medium text-slate-400 uppercase text-xs tracking-wider">{game.category}</span>
                     {game.duration && (
-                      <span className="flex items-center text-xs bg-slate-100 px-2 py-0.5 rounded-full">
+                      <span className="flex items-center text-xs bg-slate-100 px-2 py-0.5 rounded-full text-slate-600">
                         <Clock size={12} className="mr-1" /> {game.duration}
                       </span>
                     )}
                   </div>
                 </div>
-                <div className={`bg-slate-100 p-2 rounded-full group-hover:${ACCENT_COLOR_BG} transition-colors`}>
-                  <ArrowRight size={16} className={`text-slate-400 group-hover:${PRIMARY_TEXT_COLOR}`} />
+                <div className="bg-slate-50 p-2 rounded-full group-hover:bg-pink-50 transition-colors">
+                  <ArrowRight size={16} className="text-slate-400 group-hover:text-pink-600" />
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 mt-2">
                 {game.tags.slice(0, 3).map((tag, i) => (
-                  <span key={i} className="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded-md">
+                  <span key={i} className="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded-md font-medium">
                     #{tag}
                   </span>
                 ))}
@@ -974,7 +955,7 @@ const ResultsView = ({ results, onReset, onSelect }) => {
   );
 };
 
-// --- NEUE VIEW: KATALOG ---
+// --- VIEW: KATALOG ---
 const CatalogView = ({ onSelect }) => {
   const categories = [...new Set(EXERCISE_DB.map(g => g.category))];
   
@@ -983,12 +964,12 @@ const CatalogView = ({ onSelect }) => {
       <h2 className="text-2xl font-bold text-slate-800 mb-6">Alle Spiele</h2>
       {categories.map(cat => (
         <div key={cat} className="mb-8">
-          <h3 className="text-lg font-bold text-slate-600 mb-3 uppercase tracking-wider">{cat}</h3>
+          <h3 className="text-sm font-bold text-slate-500 mb-3 uppercase tracking-wider pl-1">{cat}</h3>
           <div className="grid gap-3">
             {EXERCISE_DB.filter(g => g.category === cat).map(game => (
-              <div key={game.id} onClick={() => onSelect(game)} className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 hover:border-[#E05D5D] cursor-pointer flex justify-between items-center">
-                <span className="font-bold text-slate-800">{game.title}</span>
-                <ArrowRight size={16} className="text-slate-300" />
+              <div key={game.id} onClick={() => onSelect(game)} className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 hover:border-pink-300 cursor-pointer flex justify-between items-center group transition-all">
+                <span className="font-bold text-slate-800 group-hover:text-pink-700 transition-colors">{game.title}</span>
+                <ArrowRight size={16} className="text-slate-300 group-hover:text-pink-400" />
               </div>
             ))}
           </div>
@@ -998,13 +979,24 @@ const CatalogView = ({ onSelect }) => {
   );
 };
 
-// --- NEUE VIEW: WISSEN (KOMPENDIUM - 4 TABS & EXPANDABLE) ---
+// --- VIEW: WISSEN (FIXED SCROLL) ---
 const TheoryView = () => {
   const [activeTab, setActiveTab] = useState('forms'); // forms, newspaper, philosophy, joker
   const [expandedId, setExpandedId] = useState(null);
+  const scrollContainerRef = useRef(null);
 
   const toggleExpand = (i) => {
     setExpandedId(expandedId === i ? null : i);
+  };
+
+  const scrollTabs = (direction) => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 200;
+      scrollContainerRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const renderContent = () => {
@@ -1012,63 +1004,78 @@ const TheoryView = () => {
       case 'forms': return KNOWLEDGE_BASE.forms;
       case 'newspaper': return KNOWLEDGE_BASE.newspaper;
       case 'philosophy': return KNOWLEDGE_BASE.philosophy;
-      case 'joker': 
-        // Merge Joker and Safety for the view
-        return [...KNOWLEDGE_BASE.joker, ...KNOWLEDGE_BASE.safety];
+      case 'joker': return [...KNOWLEDGE_BASE.joker, ...KNOWLEDGE_BASE.safety];
       default: return [];
     }
   };
+
+  const TabButton = ({ id, label, icon: Icon, colorClass }) => (
+    <button 
+        onClick={() => {setActiveTab(id); setExpandedId(null)}} 
+        className={`flex-shrink-0 px-5 py-3 rounded-xl whitespace-nowrap text-sm font-bold transition-all flex items-center gap-2 ${activeTab === id ? `${colorClass} text-white shadow-md` : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}
+    >
+        <Icon size={18} /> {label}
+    </button>
+  );
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4 animate-fadeIn pb-24">
       <h2 className="text-2xl font-bold text-slate-800 mb-2">Kompendium</h2>
       <p className="text-slate-500 mb-6 text-sm">Das gesammelte Wissen des Theaters der Unterdrückten.</p>
       
-      {/* TABS SCROLLABLE */}
-      <div className="flex space-x-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
-        <button onClick={() => {setActiveTab('forms'); setExpandedId(null)}} className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-bold transition-colors ${activeTab === 'forms' ? `${PRIMARY_COLOR} text-white` : 'bg-slate-100 text-slate-500'}`}>
-          <Map size={16} className="inline mr-1" /> Die Theaterformen
+      {/* TABS SCROLLABLE CONTAINER */}
+      <div className="relative mb-6 group">
+        {/* Scroll Buttons */}
+        <button 
+            onClick={() => scrollTabs('left')}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/90 shadow-md rounded-full border border-slate-100 text-slate-600 hover:text-slate-900 md:hidden"
+        >
+            <ChevronLeft size={20} />
         </button>
-        <button onClick={() => {setActiveTab('newspaper'); setExpandedId(null)}} className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-bold transition-colors ${activeTab === 'newspaper' ? `${PRIMARY_COLOR} text-white` : 'bg-slate-100 text-slate-500'}`}>
-          <FileText size={16} className="inline mr-1" /> Zeitungs-Techniken
+        <button 
+            onClick={() => scrollTabs('right')}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/90 shadow-md rounded-full border border-slate-100 text-slate-600 hover:text-slate-900 md:hidden"
+        >
+            <ChevronRight size={20} />
         </button>
-        <button onClick={() => {setActiveTab('philosophy'); setExpandedId(null)}} className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-bold transition-colors ${activeTab === 'philosophy' ? `${PRIMARY_COLOR} text-white` : 'bg-slate-100 text-slate-500'}`}>
-          <Lightbulb size={16} className="inline mr-1" /> Philosophie
-        </button>
-        <button onClick={() => {setActiveTab('joker'); setExpandedId(null)}} className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-bold transition-colors ${activeTab === 'joker' ? `${PRIMARY_COLOR} text-white` : 'bg-slate-100 text-slate-500'}`}>
-          <Mic size={16} className="inline mr-1" /> Joker & Safety
-        </button>
+
+        <div ref={scrollContainerRef} className="flex space-x-3 overflow-x-auto pb-4 px-1 scrollbar-hide scroll-smooth">
+            <TabButton id="forms" label="Formen" icon={Map} colorClass="bg-pink-600" />
+            <TabButton id="newspaper" label="Zeitung" icon={FileText} colorClass="bg-blue-600" />
+            <TabButton id="philosophy" label="Philosophie" icon={Lightbulb} colorClass="bg-violet-600" />
+            <TabButton id="joker" label="Joker & Safety" icon={Mic} colorClass="bg-orange-600" />
+        </div>
       </div>
 
       <div className="grid gap-4">
         {renderContent().map((item, i) => (
-          <div key={i} className={`bg-white rounded-xl shadow-sm border border-slate-200 transition-all duration-300 ${expandedId === i ? 'ring-2 ring-[#E05D5D]' : ''}`}>
-            {/* Header / Clickable */}
+          <div key={i} className={`bg-white rounded-xl shadow-sm border border-slate-200 transition-all duration-300 overflow-hidden ${expandedId === i ? 'ring-2 ring-pink-500 border-transparent' : 'hover:border-pink-200'}`}>
             <div 
               onClick={() => toggleExpand(i)}
-              className="p-5 cursor-pointer flex justify-between items-start"
+              className="p-5 cursor-pointer flex justify-between items-start hover:bg-slate-50 transition-colors"
             >
               <div>
-                <h3 className="text-lg font-bold text-[#E05D5D] mb-1">{item.title}</h3>
+                <h3 className={`text-lg font-bold mb-1 ${expandedId === i ? 'text-pink-600' : 'text-slate-800'}`}>{item.title}</h3>
                 {item.subtitle && <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{item.subtitle}</p>}
-                {!expandedId && expandedId !== i && <p className="text-slate-500 text-sm mt-2 line-clamp-2">{item.desc}</p>}
+                {!expandedId && <p className="text-slate-500 text-sm mt-2 line-clamp-2">{item.desc}</p>}
               </div>
-              <div className="mt-1 ml-2 text-slate-400">
-                {expandedId === i ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              <div className={`mt-1 ml-2 text-slate-400 transition-transform duration-300 ${expandedId === i ? 'rotate-180 text-pink-500' : ''}`}>
+                <ChevronDown size={20} />
               </div>
             </div>
 
-            {/* Expanded Content */}
             {expandedId === i && (
               <div className="px-5 pb-5 pt-0 animate-fadeIn">
                 <p className="text-slate-700 leading-relaxed mb-4">{item.desc}</p>
                 {item.steps && (
                   <div className="bg-slate-50 p-4 rounded-lg border border-slate-100 mb-4">
-                    <h4 className="font-bold text-slate-700 text-sm mb-2 uppercase">Ablauf / Struktur:</h4>
-                    <ul className="space-y-2">
+                    <h4 className="font-bold text-slate-700 text-sm mb-2 uppercase flex items-center gap-2">
+                        <Activity size={14} className="text-pink-500" /> Ablauf:
+                    </h4>
+                    <ul className="space-y-3 mt-3">
                       {item.steps.map((step, idx) => (
                         <li key={idx} className="text-sm text-slate-600 flex items-start">
-                          <span className="mr-2 mt-1 w-1.5 h-1.5 bg-[#E05D5D] rounded-full flex-shrink-0"></span>
+                          <span className="mr-3 mt-1.5 w-1.5 h-1.5 bg-pink-500 rounded-full flex-shrink-0"></span>
                           <span>{renderTextWithBold(step)}</span>
                         </li>
                       ))}
@@ -1076,8 +1083,8 @@ const TheoryView = () => {
                   </div>
                 )}
                 {item.goal && (
-                  <div className="flex items-start text-sm text-[#E05D5D] font-medium bg-[#E05D5D]/5 p-3 rounded-lg">
-                    <Zap size={16} className="mr-2 mt-0.5 flex-shrink-0" />
+                  <div className="flex items-start text-sm text-pink-700 font-medium bg-pink-50 p-3 rounded-lg border border-pink-100">
+                    <Zap size={16} className="mr-2 mt-0.5 flex-shrink-0 text-pink-500" />
                     Ziel: {item.goal}
                   </div>
                 )}
@@ -1090,7 +1097,7 @@ const TheoryView = () => {
   );
 };
 
-// --- NEUE VIEW: FAVORITEN ---
+// --- VIEW: FAVORITEN ---
 const FavoritesView = ({ favorites, onSelect, onRemove }) => {
   const handlePrint = () => {
     window.print();
@@ -1103,13 +1110,12 @@ const FavoritesView = ({ favorites, onSelect, onRemove }) => {
       <div className="flex justify-between items-center mb-6 print:hidden">
         <h2 className="text-2xl font-bold text-slate-800">Merkliste ({favorites.length})</h2>
         {favorites.length > 0 && (
-          <button onClick={handlePrint} className="flex items-center text-sm font-bold text-[#E05D5D] bg-[#E05D5D]/10 px-3 py-2 rounded-lg hover:bg-[#E05D5D]/20">
+          <button onClick={handlePrint} className="flex items-center text-sm font-bold text-pink-600 bg-pink-50 px-4 py-2 rounded-lg hover:bg-pink-100 transition-colors">
             <Printer size={16} className="mr-2" /> Drucken
           </button>
         )}
       </div>
 
-      {/* Print Header */}
       <div className="hidden print:block mb-8 text-center">
         <h1 className="text-3xl font-bold">Workshop-Plan</h1>
         <p>Erstellt mit Polithea Swipe & Act</p>
@@ -1117,7 +1123,7 @@ const FavoritesView = ({ favorites, onSelect, onRemove }) => {
 
       {favorites.length === 0 ? (
         <div className="text-center py-12 text-slate-400">
-          <Heart size={48} className="mx-auto mb-2 opacity-20" />
+          <Heart size={48} className="mx-auto mb-4 opacity-20" />
           <p>Noch keine Favoriten gespeichert.</p>
         </div>
       ) : (
@@ -1127,12 +1133,11 @@ const FavoritesView = ({ favorites, onSelect, onRemove }) => {
               <div onClick={() => onSelect(game)} className="cursor-pointer">
                 <h3 className="text-lg font-bold text-slate-800">{game.title}</h3>
                 <div className="flex items-center text-sm text-slate-500 mb-2">
-                  <span className="mr-3">{game.category}</span>
-                  <span className="flex items-center text-xs bg-slate-100 px-2 py-0.5 rounded-full print:border print:bg-white">
+                  <span className="mr-3 uppercase text-xs font-bold tracking-wider text-slate-400">{game.category}</span>
+                  <span className="flex items-center text-xs bg-slate-100 px-2 py-0.5 rounded-full print:border print:bg-white text-slate-600">
                     <Clock size={12} className="mr-1" /> {game.duration}
                   </span>
                 </div>
-                {/* Short Description for Print */}
                 <div className="hidden print:block text-slate-600 text-sm mt-2">
                   <p className="italic mb-2">{game.content.context}</p>
                   <ul className="list-disc pl-4">
@@ -1156,7 +1161,7 @@ const FavoritesView = ({ favorites, onSelect, onRemove }) => {
   );
 };
 
-// --- DETAIL MODAL MIT SHARE & FAVORITE ---
+// --- DETAIL MODAL ---
 const DetailModal = ({ game, onClose, isFavorite, toggleFavorite }) => {
   if (!game) return null;
 
@@ -1171,56 +1176,56 @@ const DetailModal = ({ game, onClose, isFavorite, toggleFavorite }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-sm animate-fadeIn">
       <div className="bg-white w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl relative animate-slideUp">
-        <div className="absolute top-4 right-4 flex space-x-2">
-          <button onClick={handleShare} className="p-2 bg-slate-100 rounded-full hover:bg-slate-200 text-slate-600">
+        <div className="sticky top-0 right-0 left-0 bg-white/95 backdrop-blur border-b border-slate-100 p-4 flex justify-end gap-2 z-10">
+          <button onClick={handleShare} className="p-2 bg-slate-100 rounded-full hover:bg-slate-200 text-slate-600 transition-colors">
             <Share2 size={20} />
           </button>
           <button onClick={() => toggleFavorite(game.id)} className={`p-2 rounded-full transition-colors ${isFavorite ? 'bg-red-50 text-red-500' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}>
             <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
           </button>
-          <button onClick={onClose} className="p-2 bg-slate-100 rounded-full hover:bg-slate-200 text-slate-600">
+          <button onClick={onClose} className="p-2 bg-slate-100 rounded-full hover:bg-slate-200 text-slate-600 transition-colors">
             <X size={20} />
           </button>
         </div>
 
-        <div className="p-8">
-          <span className={`text-xs font-bold uppercase tracking-wider ${PRIMARY_TEXT_COLOR} mb-2 block`}>
+        <div className="p-6 md:p-8">
+          <span className="text-xs font-bold uppercase tracking-wider text-pink-600 bg-pink-50 px-2 py-1 rounded inline-block mb-3">
             {game.category}
           </span>
-          <h2 className="text-3xl font-bold text-slate-900 mb-2">{game.title}</h2>
+          <h2 className="text-3xl font-black text-slate-900 mb-2 leading-tight">{game.title}</h2>
           
           {game.duration && (
-             <div className="flex items-center text-slate-500 text-sm mb-4">
+             <div className="flex items-center text-slate-500 text-sm mb-6 font-medium">
                <Clock size={16} className="mr-1.5" />
-               <span className="font-medium">{game.duration}</span>
+               <span>{game.duration}</span>
              </div>
           )}
           
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 mb-8">
             {game.tags.map((tag, i) => (
-              <span key={i} className={`text-xs font-medium px-2.5 py-1 ${ACCENT_COLOR_BG} text-slate-900 rounded-md border ${ACCENT_COLOR_BORDER}`}>
+              <span key={i} className="text-xs font-bold px-3 py-1.5 bg-slate-100 text-slate-600 rounded-full">
                 #{tag}
               </span>
             ))}
           </div>
 
-          <div className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-100">
-            <h4 className="flex items-center text-sm font-bold text-orange-800 mb-1">
-              <Sparkles size={16} className="mr-2" /> Warum spielen?
+          <div className="mb-8 p-5 bg-gradient-to-br from-slate-50 to-white rounded-xl border border-slate-200 shadow-sm">
+            <h4 className="flex items-center text-sm font-bold text-slate-800 mb-2 uppercase tracking-wide">
+              <Sparkles size={16} className="mr-2 text-yellow-500" /> Warum spielen?
             </h4>
-            <p className="text-sm text-orange-900/80 italic">{game.content.context}</p>
+            <p className="text-slate-600 italic leading-relaxed">{game.content.context}</p>
           </div>
 
-          <div className="mb-6">
-            <h3 className="text-lg font-bold text-slate-800 mb-3 flex items-center">
-              <BookOpen size={20} className={`mr-2 ${PRIMARY_TEXT_COLOR}`} /> Anleitung
+          <div className="mb-8">
+            <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center">
+              <BookOpen size={24} className="mr-2 text-pink-600" /> Anleitung
             </h3>
-            <ol className="space-y-3">
+            <ol className="space-y-4">
               {game.content.instructions.map((step, i) => (
-                <li key={i} className="flex items-start text-slate-700">
-                  <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-slate-100 rounded-full text-xs font-bold mr-3 mt-0.5 text-slate-500">
+                <li key={i} className="flex items-start text-slate-700 leading-relaxed">
+                  <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-slate-900 text-white rounded-full text-xs font-bold mr-4 mt-0.5 shadow-sm">
                     {i + 1}
                   </span>
                   <span>{renderTextWithBold(step)}</span>
@@ -1230,12 +1235,12 @@ const DetailModal = ({ game, onClose, isFavorite, toggleFavorite }) => {
           </div>
 
           {game.content.variations && game.content.variations.length > 0 && (
-            <div className="mt-6 pt-6 border-t border-slate-100">
-              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wide mb-3">Variationen</h3>
-              <ul className="space-y-2">
+            <div className="mt-8 pt-8 border-t border-slate-100">
+              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wide mb-4">Variationen</h3>
+              <ul className="space-y-3">
                 {game.content.variations.map((v, i) => (
-                  <li key={i} className="text-sm text-slate-600 flex items-start">
-                    <span className={`mr-2 ${PRIMARY_TEXT_COLOR}`}>•</span> {v}
+                  <li key={i} className="text-sm text-slate-600 flex items-start bg-slate-50 p-3 rounded-lg">
+                    <span className="mr-2 text-pink-500 font-bold">•</span> {v}
                   </li>
                 ))}
               </ul>
@@ -1243,10 +1248,10 @@ const DetailModal = ({ game, onClose, isFavorite, toggleFavorite }) => {
           )}
         </div>
         
-        <div className="p-4 bg-slate-50 border-t border-slate-100 sticky bottom-0">
+        <div className="p-4 bg-white border-t border-slate-100 sticky bottom-0">
           <button 
             onClick={onClose}
-            className={`w-full py-3 ${PRIMARY_COLOR} text-white rounded-xl font-bold ${PRIMARY_COLOR_HOVER} transition-colors`}
+            className="w-full py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 active:scale-[0.98] transition-all shadow-lg"
           >
             Schließen
           </button>
@@ -1256,10 +1261,10 @@ const DetailModal = ({ game, onClose, isFavorite, toggleFavorite }) => {
   );
 };
 
-// --- MAIN APP COMPONENT ---
+// --- APP ---
 
 export default function ActAndSwipeApp() {
-  const [view, setView] = useState('start'); // start, swipe, results, catalog, favorites, theory
+  const [view, setView] = useState('start'); 
   const [swipeStep, setSwipeStep] = useState(0); 
   const [filters, setFilters] = useState({ focus: null, energy: null, level: null });
   const [slideDir, setSlideDir] = useState(null);
@@ -1267,7 +1272,6 @@ export default function ActAndSwipeApp() {
   const [selectedGame, setSelectedGame] = useState(null);
   const [favorites, setFavorites] = useState([]);
 
-  // Load favorites from local storage
   useEffect(() => {
     const savedFavs = localStorage.getItem('polithea_favs');
     if (savedFavs) {
@@ -1338,75 +1342,88 @@ export default function ActAndSwipeApp() {
     setView('results');
   };
 
-  // Navigation Logic
-  const NavButton = ({ icon: Icon, label, targetView }) => (
-    <button 
-      onClick={() => setView(targetView)} 
-      className={`flex flex-col items-center justify-center w-full py-2 ${view === targetView ? PRIMARY_TEXT_COLOR : 'text-slate-400'}`}
-    >
-      <Icon size={24} />
-      <span className="text-[10px] font-bold mt-1 uppercase">{label}</span>
-    </button>
-  );
+  const NavButton = ({ icon: Icon, label, targetView, activeColor }) => {
+    const isActive = view === targetView;
+    return (
+        <button 
+        onClick={() => setView(targetView)} 
+        className={`flex flex-col items-center justify-center w-full py-2 transition-colors ${isActive ? activeColor : 'text-gray-400 hover:text-gray-600'}`}
+        >
+        <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
+        <span className="text-[10px] font-bold mt-1 uppercase tracking-wide">{label}</span>
+        </button>
+    );
+  };
 
   return (
-    <div className={`min-h-screen bg-slate-50 font-sans text-slate-900 ${SELECTION_COLOR} flex flex-col`}>
+    <div className="font-sans h-screen w-full bg-slate-50 overflow-hidden flex flex-col mx-auto max-w-md shadow-2xl relative text-slate-900">
       
-      {/* HEADER (Nur anzeigen, wenn nicht im Print-Modus) */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-10 print:hidden">
-        <div className="max-w-md mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setView('start')}>
-             <img src={LOGO_URL} alt="Polithea Logo" className="h-10 w-auto" />
-            <h1 className="text-xl font-black tracking-tight text-slate-900">SWIPE & ACT</h1>
-          </div>
-          {view === 'results' && (
-            <button onClick={handleStart} className="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
-              <RefreshCw size={18} className="text-slate-600" />
-            </button>
-          )}
-        </div>
-      </header>
-
-      {/* CONTENT AREA */}
-      <main className="flex-1 max-w-md mx-auto w-full relative overflow-hidden">
+      {/* Scrollable Content Area */}
+      <div className={`flex-1 overflow-y-auto no-scrollbar ${view === 'start' ? 'bg-slate-900' : 'bg-slate-50'}`}>
         
         {view === 'start' && (
-          <div className="flex flex-col items-center justify-center h-full pt-8 px-6 animate-fadeIn text-center pb-20">
-            <div className="mb-8 mx-auto flex items-center justify-center">
-                <img src={LOGO_URL} alt="Polithea Logo" className="object-contain" style={{ maxWidth: '160px', height: 'auto' }} />
-            </div>
-            <h2 className="text-2xl font-bold mb-4 text-slate-900 leading-tight">
-              Du bereitest die Probe vor und suchst die passenden Spiele?
-            </h2>
-            <p className="text-slate-500 mb-8 max-w-xs mx-auto text-lg font-medium">Geilo, du bist hier richtig!</p>
-            <div className="w-full space-y-4">
-              <button onClick={handleStart} className={`w-full py-4 ${PRIMARY_COLOR} text-white rounded-xl font-bold text-lg shadow-lg shadow-orange-200/50 ${PRIMARY_COLOR_HOVER} hover:shadow-xl transition-all active:scale-95 flex items-center justify-center`}>
-                Starten <ArrowRight className="ml-2" />
-              </button>
-              <button onClick={handleRandom} className="w-full py-3 bg-white text-slate-600 border-2 border-slate-200 rounded-xl font-bold text-base hover:bg-slate-50 transition-all active:scale-95 flex items-center justify-center">
-                <Shuffle size={18} className="mr-2" /> Zufälliges Spiel
-              </button>
-            </div>
+          <div className="flex flex-col h-full text-white p-6 justify-center">
+             <header className="mb-12">
+                <h1 className="text-5xl font-black tracking-tighter mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
+                SWIPE & ACT
+                </h1>
+                <p className="text-slate-400 text-lg font-medium">Dein digitaler Proben-Assistent.</p>
+            </header>
+
+            <main className="flex flex-col gap-6">
+                <div className="bg-slate-800/50 backdrop-blur rounded-2xl p-8 shadow-xl border border-slate-700 relative overflow-hidden group">
+                    <div className="absolute -right-4 -top-4 text-slate-700/30 group-hover:text-slate-700/50 transition-colors">
+                        <Dice5 size={140} />
+                    </div>
+                    <h2 className="text-2xl font-bold mb-6 relative z-10">Was probst du heute?</h2>
+                    <button 
+                        onClick={handleStart}
+                        className="w-full relative z-10 bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-500 hover:to-violet-500 text-white font-bold py-4 px-6 rounded-xl shadow-lg transform transition active:scale-95 flex items-center justify-center gap-3 mb-3"
+                    >
+                        <Shuffle size={20} />
+                        Filter Starten
+                    </button>
+                    <button 
+                        onClick={handleRandom}
+                        className="w-full relative z-10 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-6 rounded-xl shadow transition active:scale-95 flex items-center justify-center gap-2 text-sm"
+                    >
+                        <Sparkles size={16} className="text-yellow-400" />
+                        Zufälliges Spiel
+                    </button>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <button onClick={() => setView('theory')} className="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-blue-500/50 transition flex flex-col items-center gap-2">
+                        <div className="bg-blue-500/20 p-3 rounded-full text-blue-400">
+                            <BookOpen size={24} />
+                        </div>
+                        <span className="font-semibold text-sm">Wissen</span>
+                    </button>
+                    <button onClick={() => setView('favorites')} className="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-pink-500/50 transition flex flex-col items-center gap-2">
+                        <div className="bg-pink-500/20 p-3 rounded-full text-pink-400">
+                            <Heart size={24} />
+                        </div>
+                        <span className="font-semibold text-sm">Merkliste</span>
+                    </button>
+                </div>
+            </main>
           </div>
         )}
 
         {view === 'swipe' && (
-          <div className="h-full flex flex-col">
-            <div className="flex justify-center pt-8 space-x-2 mb-4">
-              <div className={`h-1.5 w-8 rounded-full transition-colors ${swipeStep >= 0 ? PRIMARY_COLOR : 'bg-slate-200'}`} />
-              <div className={`h-1.5 w-8 rounded-full transition-colors ${swipeStep >= 1 ? PRIMARY_COLOR : 'bg-slate-200'}`} />
-              <div className={`h-1.5 w-8 rounded-full transition-colors ${swipeStep >= 2 ? PRIMARY_COLOR : 'bg-slate-200'}`} />
+          <div className="h-full flex flex-col pt-6">
+            <div className="flex justify-center pt-4 space-x-2 mb-4">
+              <div className={`h-1.5 w-8 rounded-full transition-colors ${swipeStep >= 0 ? 'bg-slate-800' : 'bg-slate-200'}`} />
+              <div className={`h-1.5 w-8 rounded-full transition-colors ${swipeStep >= 1 ? 'bg-slate-800' : 'bg-slate-200'}`} />
+              <div className={`h-1.5 w-8 rounded-full transition-colors ${swipeStep >= 2 ? 'bg-slate-800' : 'bg-slate-200'}`} />
             </div>
             <div className="px-4"><SwipeCard step={swipeStep} onSwipe={handleSwipe} direction={slideDir} /></div>
           </div>
         )}
 
         {view === 'results' && <ResultsView results={filteredGames} onReset={handleStart} onSelect={setSelectedGame} />}
-        
         {view === 'catalog' && <CatalogView onSelect={setSelectedGame} />}
-        
         {view === 'theory' && <TheoryView />}
-        
         {view === 'favorites' && <FavoritesView favorites={favorites} onSelect={setSelectedGame} onRemove={toggleFavorite} />}
 
         {selectedGame && (
@@ -1417,36 +1434,17 @@ export default function ActAndSwipeApp() {
             toggleFavorite={toggleFavorite}
           />
         )}
-      </main>
+      </div>
 
-      {/* BOTTOM NAVIGATION (Print-Hidden) */}
-      <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 pb-safe pt-1 z-40 print:hidden">
-        <div className="max-w-md mx-auto flex justify-around">
-          <NavButton icon={Home} label="Start" targetView="start" />
-          <NavButton icon={Menu} label="Katalog" targetView="catalog" />
-          <NavButton icon={Library} label="Wissen" targetView="theory" />
-          <NavButton icon={Heart} label="Merkliste" targetView="favorites" />
-        </div>
-      </nav>
-
-      {/* GLOBAL STYLES */}
-      <style>{`
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
-        .animate-slideUp { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .perspective-1000 { perspective: 1000px; }
-        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        @media print {
-          body * { visibility: hidden; }
-          .print\\:block, .print\\:block * { visibility: visible; }
-          .print\\:hidden { display: none !important; }
-          .print\\:shadow-none { box-shadow: none !important; }
-          .print\\:p-0 { padding: 0 !important; }
-        }
-      `}</style>
+      {/* Bottom Navigation */}
+      {view !== 'start' && (
+        <nav className="bg-white border-t border-gray-200 px-6 py-2 flex justify-between items-center z-20 shrink-0 safe-area-bottom shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
+          <NavButton icon={Home} label="Start" targetView="start" activeColor="text-slate-900" />
+          <NavButton icon={Menu} label="Katalog" targetView="catalog" activeColor="text-slate-900" />
+          <NavButton icon={Library} label="Wissen" targetView="theory" activeColor="text-blue-600" />
+          <NavButton icon={Heart} label="Merkliste" targetView="favorites" activeColor="text-pink-600" />
+        </nav>
+      )}
     </div>
   );
 }
