@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle } from 'lucide-react';
+import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle, Heart, Share2, Printer, Menu, Library, Home, Shield, Mic, Book } from 'lucide-react';
 
 // --- KONFIGURATION ---
 const LOGO_URL = "/logo.jpeg"; 
@@ -19,9 +19,81 @@ const ACCENT_COLOR_BORDER = "border-[#FFD700]/40";
 const SELECTION_COLOR = "selection:bg-[#E05D5D]/30";
 const GRADIENT_BG = "bg-gradient-to-br from-[#FFD700] via-[#FFB347] to-[#FF8C00]"; 
 
-// --- DATENBANK (TEIL B) - VOLLSTÄNDIG DETAILLIERT ---
+// --- HELPER: Textformatierung ---
+const renderTextWithBold = (text) => {
+  if (!text) return null;
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={index} className="font-bold text-slate-900">{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+};
+
+// --- VOLLSTÄNDIGE DATENBANK (TEIL B) ---
 const EXERCISE_DB = [
-  // NEU: SAMURAI
+  // --- HIGH ENERGY & KOMPLEX (NEU) ---
+  {
+    id: "space-cuts",
+    title: "Raum-Schnitte (Space Cuts)",
+    category: "Viewpoints & Energie",
+    duration: "15-20 Min",
+    tags: ["Raum", "Präsenz", "Tempo"],
+    attributes: { focus: "extra", energy: "high", level: "advanced" },
+    content: {
+      context: "Eine fortgeschrittene Viewpoints-Übung. Sie trainiert, den Raum nicht nur zu füllen, sondern ihn durch Bewegung aktiv zu 'zerschneiden' und zu definieren. Erfordert hohe körperliche Präzision bei hohem Tempo.",
+      instructions: [
+        "Alle bewegen sich im Raum. Das Grundtempo ist hoch (nicht rennen, aber zügiges Gehen).",
+        "Aufgabe: Stell dir vor, dein Körper ist ein Rasiermesser. Du bewegst dich nicht durch leeren Raum, sondern durch dicke Materie, die du zerschneiden musst.",
+        "Jede Richtungsänderung muss scharf und plötzlich sein (keine Kurven).",
+        "Auf Kommando 'Schnitt!' führen alle eine einzige, extrem schnelle, raumgreifende Bewegung aus (z.B. mit dem Arm durch die Luft 'schneiden') und frieren sofort ein.",
+        "Aus dem Freeze startet die Gruppe sofort wieder ins hohe Tempo.",
+        "Ziel: Maximale Energie im Freeze halten, keine Entspannung."
+      ],
+      variations: ["Die Gruppe bewegt sich als ein Schwarm, der gleichzeitig schneidet.", "Kontakt-Schnitte: Man schneidet knapp am Partner vorbei."]
+    }
+  },
+  {
+    id: "rhythm-oppression",
+    title: "Der Rhythmus der Unterdrückung",
+    category: "Politisches Theater & Körper",
+    duration: "20 Min",
+    tags: ["Politik", "Körperarbeit", "Rhythmus"],
+    attributes: { focus: "extra", energy: "high", level: "advanced" },
+    content: {
+      context: "Eine Übung, die mechanische Arbeitsabläufe oder gesellschaftliche Zwänge körperlich erfahrbar macht. Sie verbindet die 'Maschine' mit politischer Analyse.",
+      instructions: [
+        "Die Gruppe bildet Paare. Person A ist 'die Maschine' (oder das System), Person B ist 'der Mensch'.",
+        "A gibt einen strengen, repetitiven Rhythmus vor (klatschen, stampfen, Wort rufen).",
+        "B muss sich in diesem Rhythmus bewegen/arbeiten. A erhöht das Tempo und den Druck.",
+        "B versucht, innerhalb des vorgegebenen, stressigen Rhythmus kleine Momente der Freiheit oder Rebellion zu finden (ein Blick, eine abweichende Bewegung), ohne aus dem Takt zu kommen.",
+        "Es ist ein physischer Kampf um Autonomie in einem diktierten System."
+      ],
+      variations: ["Ein 'Antreiber' für die ganze Gruppe.", "Der Rhythmus wird so schnell, dass das System kollabiert."]
+    }
+  },
+  {
+    id: "status-chaos",
+    title: "Status-Kampf im Chaos",
+    category: "Status & Improvisation",
+    duration: "15 Min",
+    tags: ["Status", "Stressresistenz", "Szene"],
+    attributes: { focus: "extra", energy: "high", level: "advanced" },
+    content: {
+      context: "Simuliert soziale Konflikte in Stresssituationen (z.B. überfüllter Bahnhof, Panik). Wie behalte oder verliere ich Status, wenn um mich herum Chaos herrscht?",
+      instructions: [
+        "Der Raum ist eng begrenzt (z.B. mit Stühlen markieren). Alle befinden sich darin.",
+        "Alle erhalten geheim einen Status (1-10) oder ziehen eine Karte.",
+        "Es herrscht hohes Tempo und Enge. Alle müssen sich permanent bewegen, dürfen nicht stehen bleiben.",
+        "Bei jeder Begegnung (Blickkontakt oder Anrempeln) muss sofort ein kurzes Status-Duell ausgefochten werden (Blickduell, Wegschubsen, Entschuldigen), das dem eigenen Status entspricht.",
+        "Das Ziel ist es, den eigenen Status trotz des extremen äußeren Drucks und der ständigen Bewegung aufrechtzuerhalten."
+      ],
+      variations: ["Plötzlicher Statuswechsel auf Kommando.", "Alle haben Status 10 (Hochmut) auf engstem Raum."]
+    }
+  },
+  
+  // --- AUFWÄRMEN & SPASS (NEU) ---
   {
     id: "samurai",
     title: "Samurai",
@@ -42,7 +114,6 @@ const EXERCISE_DB = [
       variations: ["Zeitlupe-Runde.", "Ohne Töne (Silent Samurai).", "Wer rausfliegt, läuft eine Runde um den Kreis, um wieder reinzukommen."]
     }
   },
-  // NEU: KOTZENDES KÄNGURU
   {
     id: "puking-kangaroo",
     title: "Kotzendes Känguru",
@@ -64,7 +135,6 @@ const EXERCISE_DB = [
       variations: ["Die Gruppe erfindet eigene Figuren (z.B. Waschmaschine, Mixer, Palme)."]
     }
   },
-  // NEU: GEFÜHLS-ORCHESTER
   {
     id: "emotion-orchestra",
     title: "Gefühls-Orchester",
@@ -84,7 +154,6 @@ const EXERCISE_DB = [
       variations: ["Ein echtes Lied (z.B. 'Alle meine Entchen') nur mit emotionalen Lauten 'singen'."]
     }
   },
-  // NEU: EIN-WORT-GESCHICHTE
   {
     id: "one-word-story",
     title: "Ein-Wort-Geschichte",
@@ -104,7 +173,8 @@ const EXERCISE_DB = [
       variations: ["Als 'Experte' mit vier Köpfen: Vier Personen sitzen eng nebeneinander und beantworten Fragen des Publikums als eine Person Wort für Wort."]
     }
   },
-  // KATEGORIE 1: AUFWÄRMEN
+  
+  // --- BESTEHENDE KLASSIKER ---
   {
     id: "the-machine",
     title: "Die Maschine",
@@ -661,6 +731,30 @@ const EXERCISE_DB = [
   }
 ];
 
+// --- THEORY DATABASE (INTERNES WISSEN) ---
+const KNOWLEDGE_BASE = {
+  methods: [
+    { title: "Forumtheater", desc: "Das Herzstück des TdU. Eine Szene, die schlecht ausgeht (Unterdrückung), wird gezeigt. Das Publikum ('Zuschau-Spielende') kann 'Stopp' rufen, die Protagonist*innen ersetzen und alternative Handlungsstrategien ausprobieren. Es ist eine Probe für die Wirklichkeit." },
+    { title: "Bildertheater", desc: "Sprache kann lügen, Körper nicht. Im Bildertheater werden Themen und Probleme rein visuell durch Körperstatuen dargestellt. Es ermöglicht eine Demokratisierung der Diskussion, da nicht die 'Redegewandten' dominieren, sondern das Bild spricht." },
+    { title: "Der Joker", desc: "Die Spielleitung im TdU. Der Joker ist kein*e Lehrer*in, sondern ein*e Geburtshelfer*in (Maieutik). Er/Sie ist neutral, stellt Fragen, problematisiert einfache Lösungen und garantiert die Sicherheit der Gruppe." },
+    { title: "Regenbogen der Wünsche", desc: "Die therapeutische Seite des TdU. Hier werden internalisierte Unterdrückungen ('Polizisten im Kopf') untersucht. Komplexe Emotionen werden in einzelne Farben (Wünsche) zerlegt und szenisch sichtbar gemacht." },
+    { title: "Unsichtbares Theater", desc: "Theater im öffentlichen Raum, das nicht als Theater erkannt werden soll. Ziel ist es, eine Diskussion oder Reaktion bei unfreiwilligen Zuschauern zu provozieren und soziale Missstände sichtbar zu machen." },
+    { title: "Legislatives Theater", desc: "Die politische Weiterentwicklung. Forumtheater wird genutzt, um Gesetze zu entwerfen. Die Vorschläge des Publikums werden von Anwälten protokolliert und in echte Gesetzesvorlagen umgewandelt." }
+  ],
+  joker: [
+    { title: "Fragen statt Sagen", desc: "Ein Joker gibt keine Antworten. Wenn die Gruppe fragt: 'War das gut so?', fragt der Joker zurück: 'Was hat das Publikum gesehen?'" },
+    { title: "Maieutik (Hebammenkunst)", desc: "Du hilfst der Gruppe, ihr eigenes Wissen 'zur Welt' zu bringen. Du weißt es nicht besser als sie." },
+    { title: "Fehler feiern", desc: "Im Theater der Unterdrückten gibt es keine 'falschen' Aktionen, nur unterschiedliche Konsequenzen. Ermutige zum Scheitern." },
+    { title: "Physisch bleiben", desc: "Vermeide lange Diskussionen im Sitzen. 'Zeig es uns, statt es zu erklären!' ist der wichtigste Satz eines Jokers." }
+  ],
+  safety: [
+    { title: "De-Rolling", desc: "Nach intensiven Szenen (besonders für Antagonisten oder Opfer) ist es essenziell, die Rolle abzustreifen. (z.B. Namen sagen, Körper abklopfen)." },
+    { title: "Stopp-Regel", desc: "Jede*r darf jederzeit 'Stopp' sagen, wenn eine Grenze überschritten wird. Das Spiel wird sofort unterbrochen." },
+    { title: "Emotionale Sicherheit", desc: "Unterscheide zwischen 'sicher' und 'bequem'. Theater darf unbequem sein, aber es darf niemanden retraumatisieren." },
+    { title: "Check-In / Check-Out", desc: "Beginne und beende jede Session mit einer kurzen Runde, um die emotionale Verfassung der Gruppe zu prüfen." }
+  ]
+};
+
 // --- KOMPONENTEN ---
 
 const SwipeCard = ({ step, onSwipe, direction }) => {
@@ -669,28 +763,27 @@ const SwipeCard = ({ step, onSwipe, direction }) => {
       step: 0,
       title: "Wonach suchst du?",
       icon: <Brain size={48} className="text-white mb-4" />,
-      left: { label: "Innenwelt", desc: "Gefühle, Psychologie, Introspektion", val: "intro", color: PRIMARY_COLOR },
-      right: { label: "Außenwelt", desc: "Körper, Raum, Politik, Gesellschaft", val: "extra", color: PRIMARY_COLOR }
+      left: { label: "Innenwelt", desc: "Gefühle, Psychologie", val: "intro", color: PRIMARY_COLOR },
+      right: { label: "Außenwelt", desc: "Körper, Raum, Politik", val: "extra", color: PRIMARY_COLOR }
     },
     {
       step: 1,
       title: "Energielevel?",
       icon: <Activity size={48} className="text-white mb-4" />,
-      left: { label: "Fokussiert", desc: "Konzentration, Analyse, Ruhe", val: "low", color: PRIMARY_COLOR },
-      right: { label: "Aktivierend", desc: "Bewegung, Chaos, High Energy", val: "high", color: PRIMARY_COLOR }
+      left: { label: "Fokussiert", desc: "Konzentration, Analyse", val: "low", color: PRIMARY_COLOR },
+      right: { label: "Aktivierend", desc: "Bewegung, Chaos", val: "high", color: PRIMARY_COLOR }
     },
     {
       step: 2,
       title: "Erfahrung der Gruppe?",
       icon: <Layers size={48} className="text-white mb-4" />,
-      left: { label: "Anfänger", desc: "Warm-up, Einfache Regeln, Kennenlernen", val: "beginner", color: PRIMARY_COLOR },
-      right: { label: "Fortgeschritten", desc: "Szenisch, Komplex, Schauspiel", val: "advanced", color: PRIMARY_COLOR }
+      left: { label: "Anfänger", desc: "Warm-up, Kennenlernen", val: "beginner", color: PRIMARY_COLOR },
+      right: { label: "Fortgeschritten", desc: "Szenisch, Komplex", val: "advanced", color: PRIMARY_COLOR }
     }
   ];
 
   const currentCard = cards[step];
   
-  // Animation classes
   let cardClass = `absolute inset-0 w-full h-full rounded-2xl shadow-2xl flex flex-col items-center justify-center p-6 text-center transition-all duration-500 ease-out transform ${GRADIENT_BG}`;
   
   if (direction === 'left') {
@@ -822,18 +915,166 @@ const ResultsView = ({ results, onReset, onSelect }) => {
   );
 };
 
-const DetailModal = ({ game, onClose }) => {
+// --- NEUE VIEW: KATALOG ---
+const CatalogView = ({ onSelect }) => {
+  const categories = [...new Set(EXERCISE_DB.map(g => g.category))];
+  
+  return (
+    <div className="w-full max-w-2xl mx-auto p-4 animate-fadeIn pb-24">
+      <h2 className="text-2xl font-bold text-slate-800 mb-6">Alle Spiele</h2>
+      {categories.map(cat => (
+        <div key={cat} className="mb-8">
+          <h3 className="text-lg font-bold text-slate-600 mb-3 uppercase tracking-wider">{cat}</h3>
+          <div className="grid gap-3">
+            {EXERCISE_DB.filter(g => g.category === cat).map(game => (
+              <div key={game.id} onClick={() => onSelect(game)} className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 hover:border-[#E05D5D] cursor-pointer flex justify-between items-center">
+                <span className="font-bold text-slate-800">{game.title}</span>
+                <ArrowRight size={16} className="text-slate-300" />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// --- NEUE VIEW: WISSEN (THEORIE - JETZT MIT TABS) ---
+const TheoryView = () => {
+  const [activeTab, setActiveTab] = useState('methods'); // methods, joker, safety
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'methods': return KNOWLEDGE_BASE.methods;
+      case 'joker': return KNOWLEDGE_BASE.joker;
+      case 'safety': return KNOWLEDGE_BASE.safety;
+      default: return [];
+    }
+  };
+
+  return (
+    <div className="w-full max-w-2xl mx-auto p-4 animate-fadeIn pb-24">
+      <h2 className="text-2xl font-bold text-slate-800 mb-4">Internes Wissen</h2>
+      
+      {/* TABS */}
+      <div className="flex space-x-2 mb-6 overflow-x-auto pb-2">
+        <button onClick={() => setActiveTab('methods')} className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-bold transition-colors ${activeTab === 'methods' ? `${PRIMARY_COLOR} text-white` : 'bg-slate-100 text-slate-500'}`}>
+          <BookOpen size={16} className="inline mr-1" /> Methoden
+        </button>
+        <button onClick={() => setActiveTab('joker')} className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-bold transition-colors ${activeTab === 'joker' ? `${PRIMARY_COLOR} text-white` : 'bg-slate-100 text-slate-500'}`}>
+          <Mic size={16} className="inline mr-1" /> Joker-Tipps
+        </button>
+        <button onClick={() => setActiveTab('safety')} className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-bold transition-colors ${activeTab === 'safety' ? `${PRIMARY_COLOR} text-white` : 'bg-slate-100 text-slate-500'}`}>
+          <Shield size={16} className="inline mr-1" /> Ethik & Safety
+        </button>
+      </div>
+
+      <div className="grid gap-4">
+        {renderContent().map((item, i) => (
+          <div key={i} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+            <h3 className="text-xl font-bold text-[#E05D5D] mb-2">{item.title}</h3>
+            <p className="text-slate-600 leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// --- NEUE VIEW: FAVORITEN ---
+const FavoritesView = ({ favorites, onSelect, onRemove }) => {
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const favoriteGames = EXERCISE_DB.filter(g => favorites.includes(g.id));
+
+  return (
+    <div className="w-full max-w-2xl mx-auto p-4 animate-fadeIn pb-24 print:p-0">
+      <div className="flex justify-between items-center mb-6 print:hidden">
+        <h2 className="text-2xl font-bold text-slate-800">Merkliste ({favorites.length})</h2>
+        {favorites.length > 0 && (
+          <button onClick={handlePrint} className="flex items-center text-sm font-bold text-[#E05D5D] bg-[#E05D5D]/10 px-3 py-2 rounded-lg hover:bg-[#E05D5D]/20">
+            <Printer size={16} className="mr-2" /> Drucken
+          </button>
+        )}
+      </div>
+
+      {/* Print Header */}
+      <div className="hidden print:block mb-8 text-center">
+        <h1 className="text-3xl font-bold">Workshop-Plan</h1>
+        <p>Erstellt mit Polithea Swipe & Act</p>
+      </div>
+
+      {favorites.length === 0 ? (
+        <div className="text-center py-12 text-slate-400">
+          <Heart size={48} className="mx-auto mb-2 opacity-20" />
+          <p>Noch keine Favoriten gespeichert.</p>
+        </div>
+      ) : (
+        <div className="grid gap-4 print:block">
+          {favoriteGames.map((game) => (
+            <div key={game.id} className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative group print:shadow-none print:border-b print:border-t-0 print:border-x-0 print:rounded-none print:mb-6 print:break-inside-avoid">
+              <div onClick={() => onSelect(game)} className="cursor-pointer">
+                <h3 className="text-lg font-bold text-slate-800">{game.title}</h3>
+                <div className="flex items-center text-sm text-slate-500 mb-2">
+                  <span className="mr-3">{game.category}</span>
+                  <span className="flex items-center text-xs bg-slate-100 px-2 py-0.5 rounded-full print:border print:bg-white">
+                    <Clock size={12} className="mr-1" /> {game.duration}
+                  </span>
+                </div>
+                {/* Short Description for Print */}
+                <div className="hidden print:block text-slate-600 text-sm mt-2">
+                  <p className="italic mb-2">{game.content.context}</p>
+                  <ul className="list-disc pl-4">
+                    {game.content.instructions.map((step, i) => (
+                      <li key={i}>{step.replace(/\*\*/g, '')}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); onRemove(game.id); }}
+                className="absolute top-4 right-4 p-2 text-slate-300 hover:text-red-500 transition-colors print:hidden"
+              >
+                <X size={20} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// --- DETAIL MODAL MIT SHARE & FAVORITE ---
+const DetailModal = ({ game, onClose, isFavorite, toggleFavorite }) => {
   if (!game) return null;
+
+  const handleShare = () => {
+    const text = `Spiel: ${game.title}\nKategorie: ${game.category}\n\n${game.content.context}`;
+    if (navigator.share) {
+      navigator.share({ title: game.title, text: text }).catch(console.error);
+    } else {
+      navigator.clipboard.writeText(text);
+      alert("In die Zwischenablage kopiert!");
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm animate-fadeIn">
       <div className="bg-white w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl relative animate-slideUp">
-        <button 
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors"
-        >
-          <X size={20} className="text-slate-600" />
-        </button>
+        <div className="absolute top-4 right-4 flex space-x-2">
+          <button onClick={handleShare} className="p-2 bg-slate-100 rounded-full hover:bg-slate-200 text-slate-600">
+            <Share2 size={20} />
+          </button>
+          <button onClick={() => toggleFavorite(game.id)} className={`p-2 rounded-full transition-colors ${isFavorite ? 'bg-red-50 text-red-500' : 'bg-slate-100 text-slate-400 hover:bg-slate-200'}`}>
+            <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
+          </button>
+          <button onClick={onClose} className="p-2 bg-slate-100 rounded-full hover:bg-slate-200 text-slate-600">
+            <X size={20} />
+          </button>
+        </div>
 
         <div className="p-8">
           <span className={`text-xs font-bold uppercase tracking-wider ${PRIMARY_TEXT_COLOR} mb-2 block`}>
@@ -841,7 +1082,6 @@ const DetailModal = ({ game, onClose }) => {
           </span>
           <h2 className="text-3xl font-bold text-slate-900 mb-2">{game.title}</h2>
           
-          {/* Duration Badge */}
           {game.duration && (
              <div className="flex items-center text-slate-500 text-sm mb-4">
                <Clock size={16} className="mr-1.5" />
@@ -874,7 +1114,7 @@ const DetailModal = ({ game, onClose }) => {
                   <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-slate-100 rounded-full text-xs font-bold mr-3 mt-0.5 text-slate-500">
                     {i + 1}
                   </span>
-                  <span>{step}</span>
+                  <span>{renderTextWithBold(step)}</span>
                 </li>
               ))}
             </ol>
@@ -910,12 +1150,32 @@ const DetailModal = ({ game, onClose }) => {
 // --- MAIN APP COMPONENT ---
 
 export default function ActAndSwipeApp() {
-  const [view, setView] = useState('start'); // start, swipe, results
-  const [swipeStep, setSwipeStep] = useState(0); // 0, 1, 2
+  const [view, setView] = useState('start'); // start, swipe, results, catalog, favorites, theory
+  const [swipeStep, setSwipeStep] = useState(0); 
   const [filters, setFilters] = useState({ focus: null, energy: null, level: null });
-  const [slideDir, setSlideDir] = useState(null); // 'left', 'right', null
+  const [slideDir, setSlideDir] = useState(null);
   const [filteredGames, setFilteredGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+
+  // Load favorites from local storage
+  useEffect(() => {
+    const savedFavs = localStorage.getItem('polithea_favs');
+    if (savedFavs) {
+      setFavorites(JSON.parse(savedFavs));
+    }
+  }, []);
+
+  const toggleFavorite = (id) => {
+    let newFavs;
+    if (favorites.includes(id)) {
+      newFavs = favorites.filter(favId => favId !== id);
+    } else {
+      newFavs = [...favorites, id];
+    }
+    setFavorites(newFavs);
+    localStorage.setItem('polithea_favs', JSON.stringify(newFavs));
+  };
 
   const handleStart = () => {
     setView('swipe');
@@ -929,18 +1189,14 @@ export default function ActAndSwipeApp() {
   };
 
   const handleSwipe = (direction, value) => {
-    if (slideDir) return; // Prevent double clicks
-
+    if (slideDir) return; 
     setSlideDir(direction);
-    
-    // Update filters based on step
     const newFilters = { ...filters };
     if (swipeStep === 0) newFilters.focus = value;
     if (swipeStep === 1) newFilters.energy = value;
     if (swipeStep === 2) newFilters.level = value;
     setFilters(newFilters);
 
-    // Wait for animation
     setTimeout(() => {
       setSlideDir(null);
       if (swipeStep < 2) {
@@ -952,15 +1208,13 @@ export default function ActAndSwipeApp() {
   };
 
   const finishSwiping = (finalFilters) => {
-    // Filter Logic
     const results = EXERCISE_DB.filter(game => {
       const matchFocus = game.attributes.focus === finalFilters.focus;
       const matchEnergy = game.attributes.energy === finalFilters.energy;
       const matchLevel = game.attributes.level === finalFilters.level;
       return matchFocus && matchEnergy && matchLevel;
     });
-
-    // Fallback logic
+    
     let finalResults = results;
     if (results.length === 0) {
         finalResults = EXERCISE_DB.filter(game => {
@@ -971,18 +1225,28 @@ export default function ActAndSwipeApp() {
             return score >= 2;
         });
     }
-
     setFilteredGames(finalResults);
     setView('results');
   };
 
+  // Navigation Logic
+  const NavButton = ({ icon: Icon, label, targetView }) => (
+    <button 
+      onClick={() => setView(targetView)} 
+      className={`flex flex-col items-center justify-center w-full py-2 ${view === targetView ? PRIMARY_TEXT_COLOR : 'text-slate-400'}`}
+    >
+      <Icon size={24} />
+      <span className="text-[10px] font-bold mt-1 uppercase">{label}</span>
+    </button>
+  );
+
   return (
-    <div className={`min-h-screen bg-slate-50 font-sans text-slate-900 ${SELECTION_COLOR}`}>
+    <div className={`min-h-screen bg-slate-50 font-sans text-slate-900 ${SELECTION_COLOR} flex flex-col`}>
       
-      {/* HEADER */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+      {/* HEADER (Nur anzeigen, wenn nicht im Print-Modus) */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-10 print:hidden">
         <div className="max-w-md mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setView('start')}>
              <img src={LOGO_URL} alt="Polithea Logo" className="h-10 w-auto" />
             <h1 className="text-xl font-black tracking-tight text-slate-900">SWIPE & ACT</h1>
           </div>
@@ -994,46 +1258,29 @@ export default function ActAndSwipeApp() {
         </div>
       </header>
 
-      {/* CONTENT */}
-      <main className="max-w-md mx-auto relative min-h-[calc(100vh-80px)] overflow-hidden">
+      {/* CONTENT AREA */}
+      <main className="flex-1 max-w-md mx-auto w-full relative overflow-hidden">
         
-        {/* VIEW: START */}
         {view === 'start' && (
-          <div className="flex flex-col items-center justify-center h-full pt-16 px-6 animate-fadeIn text-center">
+          <div className="flex flex-col items-center justify-center h-full pt-8 px-6 animate-fadeIn text-center pb-20">
             <div className="mb-8 mx-auto flex items-center justify-center">
-                <img 
-                  src={LOGO_URL} 
-                  alt="Polithea Logo" 
-                  className="object-contain" 
-                  style={{ maxWidth: '160px', height: 'auto' }}
-                />
+                <img src={LOGO_URL} alt="Polithea Logo" className="object-contain" style={{ maxWidth: '160px', height: 'auto' }} />
             </div>
             <h2 className="text-2xl font-bold mb-4 text-slate-900 leading-tight">
-              Du bereitest die Probe vor und suchst die passenden Spiele und Übungen?
+              Du bereitest die Probe vor und suchst die passenden Spiele?
             </h2>
-            <p className="text-slate-500 mb-8 max-w-xs mx-auto text-lg font-medium">
-              Geilo, du bist hier richtig!
-            </p>
+            <p className="text-slate-500 mb-8 max-w-xs mx-auto text-lg font-medium">Geilo, du bist hier richtig!</p>
             <div className="w-full space-y-4">
-              <button 
-                onClick={handleStart}
-                className={`w-full py-4 ${PRIMARY_COLOR} text-white rounded-xl font-bold text-lg shadow-lg shadow-orange-200/50 ${PRIMARY_COLOR_HOVER} hover:shadow-xl transition-all active:scale-95 flex items-center justify-center`}
-              >
+              <button onClick={handleStart} className={`w-full py-4 ${PRIMARY_COLOR} text-white rounded-xl font-bold text-lg shadow-lg shadow-orange-200/50 ${PRIMARY_COLOR_HOVER} hover:shadow-xl transition-all active:scale-95 flex items-center justify-center`}>
                 Starten <ArrowRight className="ml-2" />
               </button>
-              
-              <button 
-                onClick={handleRandom}
-                className="w-full py-3 bg-white text-slate-600 border-2 border-slate-200 rounded-xl font-bold text-base hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-95 flex items-center justify-center"
-              >
+              <button onClick={handleRandom} className="w-full py-3 bg-white text-slate-600 border-2 border-slate-200 rounded-xl font-bold text-base hover:bg-slate-50 transition-all active:scale-95 flex items-center justify-center">
                 <Shuffle size={18} className="mr-2" /> Zufälliges Spiel
               </button>
             </div>
-            <p className="mt-8 text-xs text-slate-400">Powered by Polithea Osnabrück • Version 1.1</p>
           </div>
         )}
 
-        {/* VIEW: SWIPE */}
         {view === 'swipe' && (
           <div className="h-full flex flex-col">
             <div className="flex justify-center pt-8 space-x-2 mb-4">
@@ -1041,56 +1288,52 @@ export default function ActAndSwipeApp() {
               <div className={`h-1.5 w-8 rounded-full transition-colors ${swipeStep >= 1 ? PRIMARY_COLOR : 'bg-slate-200'}`} />
               <div className={`h-1.5 w-8 rounded-full transition-colors ${swipeStep >= 2 ? PRIMARY_COLOR : 'bg-slate-200'}`} />
             </div>
-            
-            <div className="px-4">
-                <SwipeCard 
-                step={swipeStep} 
-                onSwipe={handleSwipe} 
-                direction={slideDir} 
-                />
-            </div>
+            <div className="px-4"><SwipeCard step={swipeStep} onSwipe={handleSwipe} direction={slideDir} /></div>
           </div>
         )}
 
-        {/* VIEW: RESULTS */}
-        {view === 'results' && (
-          <div className="pt-6 pb-20">
-            <ResultsView 
-              results={filteredGames} 
-              onReset={handleStart} 
-              onSelect={setSelectedGame}
-            />
-          </div>
-        )}
+        {view === 'results' && <ResultsView results={filteredGames} onReset={handleStart} onSelect={setSelectedGame} />}
+        
+        {view === 'catalog' && <CatalogView onSelect={setSelectedGame} />}
+        
+        {view === 'theory' && <TheoryView />}
+        
+        {view === 'favorites' && <FavoritesView favorites={favorites} onSelect={setSelectedGame} onRemove={toggleFavorite} />}
 
-        {/* MODAL: DETAILS */}
         {selectedGame && (
           <DetailModal 
             game={selectedGame} 
             onClose={() => setSelectedGame(null)} 
+            isFavorite={favorites.includes(selectedGame.id)}
+            toggleFavorite={toggleFavorite}
           />
         )}
-
       </main>
 
-      {/* Global CSS for animations */}
+      {/* BOTTOM NAVIGATION (Print-Hidden) */}
+      <nav className="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 pb-safe pt-1 z-40 print:hidden">
+        <div className="max-w-md mx-auto flex justify-around">
+          <NavButton icon={Home} label="Start" targetView="start" />
+          <NavButton icon={Menu} label="Katalog" targetView="catalog" />
+          <NavButton icon={Library} label="Wissen" targetView="theory" />
+          <NavButton icon={Heart} label="Merkliste" targetView="favorites" />
+        </div>
+      </nav>
+
+      {/* GLOBAL STYLES */}
       <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes slideUp {
-          from { transform: translateY(20px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.4s ease-out forwards;
-        }
-        .animate-slideUp {
-          animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .perspective-1000 {
-          perspective: 1000px;
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
+        .animate-slideUp { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .perspective-1000 { perspective: 1000px; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+        @media print {
+          body * { visibility: hidden; }
+          .print\\:block, .print\\:block * { visibility: visible; }
+          .print\\:hidden { display: none !important; }
+          .print\\:shadow-none { box-shadow: none !important; }
+          .print\\:p-0 { padding: 0 !important; }
         }
       `}</style>
     </div>
