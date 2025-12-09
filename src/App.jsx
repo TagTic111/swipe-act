@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle, Heart, Share2, Printer, Menu, Library, Home, Shield, Mic, FileText, Map, Lightbulb } from 'lucide-react';
+import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle, Heart, Share2, Printer, Menu, Library, Home, Shield, Mic, FileText, Map, Lightbulb, ChevronUp, ChevronDown } from 'lucide-react';
 
 // --- KONFIGURATION ---
 const LOGO_URL = "/logo.jpeg"; 
 
 // Farben (Polithea Design)
-const BRAND_RED = "#E05D5D";     
-const BRAND_YELLOW = "#FFD700";  
-const BRAND_ORANGE = "#FF8C00";  
-const BRAND_BLACK = "#1a1a1a";   
+const BRAND_RED = "#E05D5D";      
+const BRAND_YELLOW = "#FFD700";   
+const BRAND_ORANGE = "#FF8C00";   
+const BRAND_BLACK = "#1a1a1a";    
 
 // Tailwind Klassen
 const PRIMARY_COLOR = "bg-[#E05D5D]"; 
@@ -92,7 +92,7 @@ const EXERCISE_DB = [
       variations: ["**Status-Wechsel:** Auf Kommando 'Wechsel!' dreht sich die Hierarchie um (1 wird 10).", "**Hochmut:** Alle haben Status 10 auf engstem Raum (führt zu maximalem Konflikt)."]
     }
   },
-  
+   
   // --- KATEGORIE: AUFWÄRMEN & ENERGIE ---
   {
     id: "samurai",
@@ -422,7 +422,7 @@ const EXERCISE_DB = [
       variations: ["Rückwärts zählen.", "Bis zur Anzahl der Gruppenteilnehmer zählen."]
     }
   },
-  
+   
   // --- KATEGORIE: IMAGE THEATRE (PRAXIS) ---
   {
     id: "great-game-power",
@@ -518,7 +518,7 @@ const EXERCISE_DB = [
       variations: ["Statuswechsel innerhalb der Szene erzwingen."]
     }
   },
-  
+   
   // --- KATEGORIE: KONFLIKT & FORUM (PRAXIS) ---
   {
     id: "rashomon",
@@ -557,7 +557,7 @@ const EXERCISE_DB = [
       variations: ["Schieben Rücken an Rücken.", "Mit geschlossenen Augen (erhöht die Sensibilität)."]
     }
   },
-  
+   
   // --- KATEGORIE: RAINBOW (PRAXIS) ---
   {
     id: "cops-in-head",
@@ -596,7 +596,7 @@ const EXERCISE_DB = [
       variations: ["Einbeziehung von Bildern, wie Dritte (z.B. Kollegen) die Person sehen."]
     }
   },
-
+ 
   // --- KATEGORIE: SCHAUSPIEL-TECHNIK ---
   {
     id: "walking-grid",
@@ -801,7 +801,7 @@ const KNOWLEDGE_BASE = {
   joker: [
     { title: "Fragen statt Sagen", desc: "Ein Joker gibt keine Antworten. Wenn die Gruppe fragt: 'War das gut so?', fragt der Joker zurück: 'Was hat das Publikum gesehen?' oder 'Hat es das Problem gelöst?'" },
     { title: "Allparteilichkeit", desc: "Du bist auf keiner Seite, sondern auf der Seite des demokratischen Prozesses. Du musst auch den Antagonisten (den 'Bösen') vor unsachlichen Angriffen schützen, damit die Analyse sauber bleibt." },
-    { title: "Physisch bleiben", desc: "'Zeig es uns, statt es zu erklären!' ist dein wichtigster Satz. Vermeide 'Sitz-Fußball' (lange Diskussionen ohne Aktion). Sobald jemand eine Idee hat: 'Komm auf die Bühne und mach es!'" },
+    { title: "Physisch bleiben", desc: "Du bist auf der Bühne. 'Zeig es uns, statt es zu erklären!' ist dein wichtigster Satz. Vermeide 'Sitz-Fußball' (lange Diskussionen ohne Aktion). Sobald jemand eine Idee hat: 'Komm auf die Bühne und mach es!'" },
     { title: "Fehler feiern", desc: "Im Theater der Unterdrückten gibt es keine 'falschen' Aktionen, nur unterschiedliche Konsequenzen. Ermutige zum Scheitern und Ausprobieren. Ein 'schlechter' Versuch lehrt uns oft mehr als ein guter." },
     { title: "Umgang mit Vielrednern", desc: "Wenn jemand Monologe hält: Unterbrich höflich aber bestimmt und bitte um eine *körperliche* Darstellung des Gesagten. Oder gib die Frage an die Gruppe weiter." },
     { title: "Das unrealistische Angebot", desc: "Wenn ein Zuschauer eine 'magische Lösung' spielt (z.B. der böse Chef wird plötzlich nett): Frage das Publikum: 'Ist das realistisch?'. Wenn alle 'Nein' sagen, muss neu gespielt werden." }
@@ -1012,7 +1012,9 @@ const TheoryView = () => {
       case 'forms': return KNOWLEDGE_BASE.forms;
       case 'newspaper': return KNOWLEDGE_BASE.newspaper;
       case 'philosophy': return KNOWLEDGE_BASE.philosophy;
-      case 'joker': return KNOWLEDGE_BASE.joker;
+      case 'joker': 
+        // Merge Joker and Safety for the view
+        return [...KNOWLEDGE_BASE.joker, ...KNOWLEDGE_BASE.safety];
       default: return [];
     }
   };
