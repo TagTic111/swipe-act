@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle, Heart, Share2, Printer, Menu, Library, Home, Shield, Mic, FileText, Map, Lightbulb, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Dice5 } from 'lucide-react';
+import { Sparkles, Brain, Zap, Users, ArrowRight, ArrowLeft, RefreshCw, X, BookOpen, Layers, Activity, Clock, Search, Shuffle, Heart, Share2, Printer, Menu, Library, Home, Shield, Mic, FileText, Map, Lightbulb, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Dice5, AlertCircle } from 'lucide-react';
+
+// --- KONFIGURATION ---
+const LOGO_URL = "https://www.polithea.de/wp-content/uploads/2020/09/Polithea_Logo_RGB-150x150.png"; // Beispiel-URL oder lokal "/logo.jpeg"
 
 // --- HELPER: Textformatierung ---
 const renderTextWithBold = (text) => {
@@ -711,9 +714,14 @@ const KNOWLEDGE_BASE = {
       desc: "Eine der ersten Methoden Boals, entwickelt unter der brasilianischen Diktatur. Es dient dazu, Nachrichten oder Texte szenisch zu zerlegen, um die darin versteckte Ideologie, Manipulation oder Lücken sichtbar zu machen. Es verwandelt passiven Medienkonsum in aktive Analyse.",
       steps: [
         "**Auswahl:** Ein Artikel wird gewählt, der analysiert werden soll.",
-        "**Technik:** Eine der 12 Techniken wird angewandt (siehe Tab 'Zeitungs-Techniken'), um den Text zu verfremden.",
+        "**Technik:** Eine der 12 Techniken wird angewandt (siehe unten), um den Text zu verfremden.",
         "**Aufführung:** Der Text wird neu inszeniert, oft satirisch oder entlarvend.",
-        "**Ziel:** Zu zeigen, was *nicht* im Text steht oder wie Meinung gemacht wird."
+        "**Technik 1 (Einfaches Lesen):** Artikel vom Kontext lösen.",
+        "**Technik 2 (Gekreuztes Lesen):** Widersprüchliche Artikel abwechselnd lesen.",
+        "**Technik 4 (Rhythmisches Lesen):** Text zu unpassender Musik (Samba) lesen.",
+        "**Technik 5 (Parallele Handlung):** Text vs. gezeigte Realität.",
+        "**Technik 8 (Verstärkung):** Jingles/Werbung einbauen.",
+        "**Technik 9 (Konkretisierung):** Abstrakte Begriffe konkret spielen."
       ],
       goal: "Kritisches Bewusstsein gegenüber Informationen schaffen. Medienkompetenz."
     },
@@ -754,20 +762,6 @@ const KNOWLEDGE_BASE = {
       goal: "Direkte Demokratie. Der Bürger wird zum Gesetzgeber."
     }
   ],
-  newspaper: [
-    { title: "1. Einfaches Lesen", desc: "Ein Artikel wird vorgelesen, aber vom Kontext gelöst (z.B. eine Kriegserklärung wird mit der Betonung eines Kochrezepts oder einer Liebeserklärung vorgelesen)." },
-    { title: "2. Gekreuztes Lesen", desc: "Zwei Artikel mit widersprüchlichen Informationen (oder aus verschiedenen Zeitungen) werden abwechselnd Zeile für Zeile vorgelesen, was neue, oft absurde Zusammenhänge schafft." },
-    { title: "3. Ergänzendes Lesen", desc: "Alles, was im Text verschwiegen wird (Hintergründe, Opfer, Profit), wird von einer zweiten Person an den passenden Stellen laut hinzugefügt." },
-    { title: "4. Rhythmisches Lesen", desc: "Der Text wird zu einem völlig unpassenden musikalischen Rhythmus (z.B. Samba, Walzer, Marschmusik) gelesen, um den Inhalt zu 'filtern' und lächerlich zu machen." },
-    { title: "5. Parallele Handlung", desc: "Der Text wird neutral vorgelesen, während im Hintergrund szenisch die brutale Realität gezeigt wird, die der Text verschleiert oder beschönigt." },
-    { title: "6. Improvisation", desc: "Der Artikel dient als Ausgangspunkt für eine freie Improvisation, die die Konsequenzen der Nachricht weiterspinnt: Was passiert danach?" },
-    { title: "7. Historische Lesung", desc: "Eine Nachricht von heute wird so gelesen, als wäre sie aus einer anderen Zeit (z.B. Mittelalter, NS-Zeit), oder umgekehrt, um Parallelen aufzuzeigen." },
-    { title: "8. Verstärkung", desc: "Der Text wird von Liedern, Jingles oder Werbung begleitet oder unterbrochen, um die Absurdität zu steigern." },
-    { title: "9. Konkretisierung des Abstrakten", desc: "Abstrakte Begriffe (Inflation, Kollateralschaden, Sparmaßnahme) werden in konkrete, schmerzhafte Bilder auf der Bühne übersetzt." },
-    { title: "10. Text aus dem Kontext", desc: "Ein Text wird in einen völlig neuen Kontext gestellt (z.B. eine Rede des Kanzlers wird im Kindergarten oder im Gefängnis gehalten)." },
-    { title: "11. Feld-Interview", desc: "Die Figuren, die im Artikel vorkommen, werden auf der Bühne 'interviewt', um ihre wahren Motive zu enthüllen." },
-    { title: "12. Verhör", desc: "Der Autor des Artikels wird 'verhört': Warum hat er das geschrieben? Wer bezahlt ihn? Was hat er weggelassen?" }
-  ],
   philosophy: [
     { title: "Spect-Actor (Zuschau-Spieler)", desc: "Der zentrale Begriff bei Boal. Wir sind keine passiven Zuschauer (Spectators), die nur konsumieren, sondern handelnde Akteure (Actors). Im TdU wird die Trennung zwischen Bühne und Saal aufgehoben. Jeder ist Experte seines eigenen Lebens und kann eingreifen." },
     { title: "Maieutik (Hebammenkunst)", desc: "Der Joker ist kein Lehrer, der Wissen eintrichtert ('Banking Concept' nach Freire). Er ist wie Sokrates eine 'Hebamme', die hilft, das Wissen, das die Gruppe bereits in sich trägt, zur Welt zu bringen. Er stellt Fragen, statt Antworten zu geben." },
@@ -782,7 +776,9 @@ const KNOWLEDGE_BASE = {
     { title: "Physisch bleiben", desc: "Du bist auf der Bühne. 'Zeig es uns, statt es zu erklären!' ist dein wichtigster Satz. Vermeide 'Sitz-Fußball' (lange Diskussionen ohne Aktion). Sobald jemand eine Idee hat: 'Komm auf die Bühne und mach es!'" },
     { title: "Fehler feiern", desc: "Im Theater der Unterdrückten gibt es keine 'falschen' Aktionen, nur unterschiedliche Konsequenzen. Ermutige zum Scheitern und Ausprobieren. Ein 'schlechter' Versuch lehrt uns oft mehr als ein guter." },
     { title: "Umgang mit Vielrednern", desc: "Wenn jemand Monologe hält: Unterbrich höflich aber bestimmt und bitte um eine *körperliche* Darstellung des Gesagten. Oder gib die Frage an die Gruppe weiter." },
-    { title: "Das unrealistische Angebot", desc: "Wenn ein Zuschauer eine 'magische Lösung' spielt (z.B. der böse Chef wird plötzlich nett): Frage das Publikum: 'Ist das realistisch?'. Wenn alle 'Nein' sagen, muss neu gespielt werden." }
+    { title: "Das unrealistische Angebot", desc: "Wenn ein Zuschauer eine 'magische Lösung' spielt (z.B. der böse Chef wird plötzlich nett): Frage das Publikum: 'Ist das realistisch?'. Wenn alle 'Nein' sagen, muss neu gespielt werden." },
+    { title: "Tipp: Bildertheater", desc: "Ermutige dazu, NICHT zu sprechen. Bilder sind stärker, wenn sie mehrdeutig bleiben. Lass das Publikum erst 'lesen' (beschreiben), was sie sehen, bevor der 'Bildhauer' erklärt, was er gemeint hat." },
+    { title: "Tipp: Forumtheater", desc: "Frage immer zuerst den Protagonisten, ob die Intervention hilfreich war. Wenn er 'Ja' sagt, frage das Publikum: 'War das realistisch?'. Nur wenn beide Ja sagen, ist es ein Modell." }
   ],
   safety: [
     { title: "De-Rolling", desc: "Nach intensiven Szenen (besonders für Antagonisten oder Opfer) ist es essenziell, die Rolle abzustreifen. Methoden: Namen sagen, Körper abklopfen, 'Ich bin nicht mehr der Vater, ich bin wieder Max', Grimassen schneiden." },
@@ -800,22 +796,22 @@ const SwipeCard = ({ step, onSwipe, direction }) => {
       step: 0,
       title: "Wonach suchst du?",
       icon: <Brain size={48} className="text-white mb-4" />,
-      left: { label: "Innenwelt", desc: "Gefühle, Psychologie", val: "intro", color: 'bg-pink-600' },
-      right: { label: "Außenwelt", desc: "Körper, Raum, Politik", val: "extra", color: 'bg-violet-600' }
+      left: { label: "Innenwelt", desc: "Gefühle, Psychologie", val: "intro", color: 'bg-red-500' },
+      right: { label: "Außenwelt", desc: "Körper, Raum, Politik", val: "extra", color: 'bg-yellow-500' }
     },
     {
       step: 1,
       title: "Energielevel?",
       icon: <Activity size={48} className="text-white mb-4" />,
-      left: { label: "Fokussiert", desc: "Konzentration, Analyse", val: "low", color: 'bg-blue-600' },
-      right: { label: "Aktivierend", desc: "Bewegung, Chaos", val: "high", color: 'bg-orange-600' }
+      left: { label: "Fokussiert", desc: "Konzentration, Analyse", val: "low", color: 'bg-orange-500' },
+      right: { label: "Aktivierend", desc: "Bewegung, Chaos", val: "high", color: 'bg-red-600' }
     },
     {
       step: 2,
       title: "Erfahrung der Gruppe?",
       icon: <Layers size={48} className="text-white mb-4" />,
-      left: { label: "Anfänger", desc: "Warm-up, Kennenlernen", val: "beginner", color: 'bg-green-600' },
-      right: { label: "Fortgeschritten", desc: "Szenisch, Komplex", val: "advanced", color: 'bg-purple-600' }
+      left: { label: "Anfänger", desc: "Warm-up, Kennenlernen", val: "beginner", color: 'bg-yellow-600' },
+      right: { label: "Fortgeschritten", desc: "Szenisch, Komplex", val: "advanced", color: 'bg-red-700' }
     }
   ];
 
@@ -888,7 +884,7 @@ const ResultsView = ({ results, onReset, onSelect }) => {
     <div className="w-full max-w-2xl mx-auto p-4 animate-fadeIn pb-24">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-slate-800">Ergebnisse ({filteredResults.length})</h2>
-        <button onClick={onReset} className="flex items-center text-sm font-medium text-slate-500 hover:text-pink-600 transition-colors">
+        <button onClick={onReset} className="flex items-center text-sm font-medium text-slate-500 hover:text-red-500 transition-colors">
           <RefreshCw size={16} className="mr-1" /> Neustart
         </button>
       </div>
@@ -903,7 +899,7 @@ const ResultsView = ({ results, onReset, onSelect }) => {
           placeholder="Suche..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all shadow-sm"
+          className="block w-full pl-10 pr-3 py-3 border border-slate-200 rounded-xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all shadow-sm"
         />
       </div>
 
@@ -920,11 +916,11 @@ const ResultsView = ({ results, onReset, onSelect }) => {
             <div 
               key={game.id} 
               onClick={() => onSelect(game)}
-              className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-pink-300 cursor-pointer transition-all group"
+              className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-yellow-400 cursor-pointer transition-all group"
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-pink-600 transition-colors">
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-red-600 transition-colors">
                     {game.title}
                   </h3>
                   <div className="flex items-center text-sm text-slate-500 mb-2">
@@ -936,8 +932,8 @@ const ResultsView = ({ results, onReset, onSelect }) => {
                     )}
                   </div>
                 </div>
-                <div className="bg-slate-50 p-2 rounded-full group-hover:bg-pink-50 transition-colors">
-                  <ArrowRight size={16} className="text-slate-400 group-hover:text-pink-600" />
+                <div className="bg-slate-50 p-2 rounded-full group-hover:bg-orange-50 transition-colors">
+                  <ArrowRight size={16} className="text-slate-400 group-hover:text-orange-600" />
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 mt-2">
@@ -967,9 +963,9 @@ const CatalogView = ({ onSelect }) => {
           <h3 className="text-sm font-bold text-slate-500 mb-3 uppercase tracking-wider pl-1">{cat}</h3>
           <div className="grid gap-3">
             {EXERCISE_DB.filter(g => g.category === cat).map(game => (
-              <div key={game.id} onClick={() => onSelect(game)} className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 hover:border-pink-300 cursor-pointer flex justify-between items-center group transition-all">
-                <span className="font-bold text-slate-800 group-hover:text-pink-700 transition-colors">{game.title}</span>
-                <ArrowRight size={16} className="text-slate-300 group-hover:text-pink-400" />
+              <div key={game.id} onClick={() => onSelect(game)} className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 hover:border-orange-300 cursor-pointer flex justify-between items-center group transition-all">
+                <span className="font-bold text-slate-800 group-hover:text-red-700 transition-colors">{game.title}</span>
+                <ArrowRight size={16} className="text-slate-300 group-hover:text-orange-400" />
               </div>
             ))}
           </div>
@@ -981,7 +977,7 @@ const CatalogView = ({ onSelect }) => {
 
 // --- VIEW: WISSEN (FIXED SCROLL) ---
 const TheoryView = () => {
-  const [activeTab, setActiveTab] = useState('forms'); // forms, newspaper, philosophy, joker
+  const [activeTab, setActiveTab] = useState('forms'); // forms, philosophy, joker
   const [expandedId, setExpandedId] = useState(null);
   const scrollContainerRef = useRef(null);
 
@@ -1002,7 +998,6 @@ const TheoryView = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'forms': return KNOWLEDGE_BASE.forms;
-      case 'newspaper': return KNOWLEDGE_BASE.newspaper;
       case 'philosophy': return KNOWLEDGE_BASE.philosophy;
       case 'joker': return [...KNOWLEDGE_BASE.joker, ...KNOWLEDGE_BASE.safety];
       default: return [];
@@ -1040,26 +1035,25 @@ const TheoryView = () => {
         </button>
 
         <div ref={scrollContainerRef} className="flex space-x-3 overflow-x-auto pb-4 px-1 scrollbar-hide scroll-smooth">
-            <TabButton id="forms" label="Formen" icon={Map} colorClass="bg-pink-600" />
-            <TabButton id="newspaper" label="Zeitung" icon={FileText} colorClass="bg-blue-600" />
-            <TabButton id="philosophy" label="Philosophie" icon={Lightbulb} colorClass="bg-violet-600" />
-            <TabButton id="joker" label="Joker & Safety" icon={Mic} colorClass="bg-orange-600" />
+            <TabButton id="forms" label="Die Formen" icon={Map} colorClass="bg-red-600" />
+            <TabButton id="philosophy" label="Philosophie" icon={Lightbulb} colorClass="bg-orange-500" />
+            <TabButton id="joker" label="Joker & Safety" icon={Mic} colorClass="bg-yellow-500" />
         </div>
       </div>
 
       <div className="grid gap-4">
         {renderContent().map((item, i) => (
-          <div key={i} className={`bg-white rounded-xl shadow-sm border border-slate-200 transition-all duration-300 overflow-hidden ${expandedId === i ? 'ring-2 ring-pink-500 border-transparent' : 'hover:border-pink-200'}`}>
+          <div key={i} className={`bg-white rounded-xl shadow-sm border border-slate-200 transition-all duration-300 overflow-hidden ${expandedId === i ? 'ring-2 ring-red-500 border-transparent' : 'hover:border-red-200'}`}>
             <div 
               onClick={() => toggleExpand(i)}
               className="p-5 cursor-pointer flex justify-between items-start hover:bg-slate-50 transition-colors"
             >
               <div>
-                <h3 className={`text-lg font-bold mb-1 ${expandedId === i ? 'text-pink-600' : 'text-slate-800'}`}>{item.title}</h3>
+                <h3 className={`text-lg font-bold mb-1 ${expandedId === i ? 'text-red-600' : 'text-slate-800'}`}>{item.title}</h3>
                 {item.subtitle && <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{item.subtitle}</p>}
                 {!expandedId && <p className="text-slate-500 text-sm mt-2 line-clamp-2">{item.desc}</p>}
               </div>
-              <div className={`mt-1 ml-2 text-slate-400 transition-transform duration-300 ${expandedId === i ? 'rotate-180 text-pink-500' : ''}`}>
+              <div className={`mt-1 ml-2 text-slate-400 transition-transform duration-300 ${expandedId === i ? 'rotate-180 text-red-500' : ''}`}>
                 <ChevronDown size={20} />
               </div>
             </div>
@@ -1070,12 +1064,12 @@ const TheoryView = () => {
                 {item.steps && (
                   <div className="bg-slate-50 p-4 rounded-lg border border-slate-100 mb-4">
                     <h4 className="font-bold text-slate-700 text-sm mb-2 uppercase flex items-center gap-2">
-                        <Activity size={14} className="text-pink-500" /> Ablauf:
+                        <Activity size={14} className="text-red-500" /> Ablauf:
                     </h4>
                     <ul className="space-y-3 mt-3">
                       {item.steps.map((step, idx) => (
                         <li key={idx} className="text-sm text-slate-600 flex items-start">
-                          <span className="mr-3 mt-1.5 w-1.5 h-1.5 bg-pink-500 rounded-full flex-shrink-0"></span>
+                          <span className="mr-3 mt-1.5 w-1.5 h-1.5 bg-red-500 rounded-full flex-shrink-0"></span>
                           <span>{renderTextWithBold(step)}</span>
                         </li>
                       ))}
@@ -1083,8 +1077,8 @@ const TheoryView = () => {
                   </div>
                 )}
                 {item.goal && (
-                  <div className="flex items-start text-sm text-pink-700 font-medium bg-pink-50 p-3 rounded-lg border border-pink-100">
-                    <Zap size={16} className="mr-2 mt-0.5 flex-shrink-0 text-pink-500" />
+                  <div className="flex items-start text-sm text-red-700 font-medium bg-red-50 p-3 rounded-lg border border-red-100">
+                    <Zap size={16} className="mr-2 mt-0.5 flex-shrink-0 text-red-500" />
                     Ziel: {item.goal}
                   </div>
                 )}
@@ -1110,7 +1104,7 @@ const FavoritesView = ({ favorites, onSelect, onRemove }) => {
       <div className="flex justify-between items-center mb-6 print:hidden">
         <h2 className="text-2xl font-bold text-slate-800">Merkliste ({favorites.length})</h2>
         {favorites.length > 0 && (
-          <button onClick={handlePrint} className="flex items-center text-sm font-bold text-pink-600 bg-pink-50 px-4 py-2 rounded-lg hover:bg-pink-100 transition-colors">
+          <button onClick={handlePrint} className="flex items-center text-sm font-bold text-red-600 bg-red-50 px-4 py-2 rounded-lg hover:bg-red-100 transition-colors">
             <Printer size={16} className="mr-2" /> Drucken
           </button>
         )}
@@ -1191,7 +1185,7 @@ const DetailModal = ({ game, onClose, isFavorite, toggleFavorite }) => {
         </div>
 
         <div className="p-6 md:p-8">
-          <span className="text-xs font-bold uppercase tracking-wider text-pink-600 bg-pink-50 px-2 py-1 rounded inline-block mb-3">
+          <span className="text-xs font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-1 rounded inline-block mb-3">
             {game.category}
           </span>
           <h2 className="text-3xl font-black text-slate-900 mb-2 leading-tight">{game.title}</h2>
@@ -1220,7 +1214,7 @@ const DetailModal = ({ game, onClose, isFavorite, toggleFavorite }) => {
 
           <div className="mb-8">
             <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center">
-              <BookOpen size={24} className="mr-2 text-pink-600" /> Anleitung
+              <BookOpen size={24} className="mr-2 text-red-600" /> Anleitung
             </h3>
             <ol className="space-y-4">
               {game.content.instructions.map((step, i) => (
@@ -1240,7 +1234,7 @@ const DetailModal = ({ game, onClose, isFavorite, toggleFavorite }) => {
               <ul className="space-y-3">
                 {game.content.variations.map((v, i) => (
                   <li key={i} className="text-sm text-slate-600 flex items-start bg-slate-50 p-3 rounded-lg">
-                    <span className="mr-2 text-pink-500 font-bold">•</span> {v}
+                    <span className="mr-2 text-red-500 font-bold">•</span> {v}
                   </li>
                 ))}
               </ul>
@@ -1363,8 +1357,14 @@ export default function ActAndSwipeApp() {
         
         {view === 'start' && (
           <div className="flex flex-col h-full text-white p-6 justify-center">
-             <header className="mb-12">
-                <h1 className="text-5xl font-black tracking-tighter mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
+             <header className="mb-12 flex flex-col items-start">
+                <img 
+                  src={LOGO_URL} 
+                  alt="Polithea Logo" 
+                  className="h-16 w-auto mb-4 rounded-md shadow-lg" 
+                  onError={(e) => {e.target.style.display='none'}} 
+                />
+                <h1 className="text-5xl font-black tracking-tighter mb-2 text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500">
                 SWIPE & ACT
                 </h1>
                 <p className="text-slate-400 text-lg font-medium">Dein digitaler Proben-Assistent.</p>
@@ -1378,7 +1378,7 @@ export default function ActAndSwipeApp() {
                     <h2 className="text-2xl font-bold mb-6 relative z-10">Was probst du heute?</h2>
                     <button 
                         onClick={handleStart}
-                        className="w-full relative z-10 bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-500 hover:to-violet-500 text-white font-bold py-4 px-6 rounded-xl shadow-lg transform transition active:scale-95 flex items-center justify-center gap-3 mb-3"
+                        className="w-full relative z-10 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-bold py-4 px-6 rounded-xl shadow-lg transform transition active:scale-95 flex items-center justify-center gap-3 mb-3"
                     >
                         <Shuffle size={20} />
                         Filter Starten
@@ -1399,8 +1399,8 @@ export default function ActAndSwipeApp() {
                         </div>
                         <span className="font-semibold text-sm">Wissen</span>
                     </button>
-                    <button onClick={() => setView('favorites')} className="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-pink-500/50 transition flex flex-col items-center gap-2">
-                        <div className="bg-pink-500/20 p-3 rounded-full text-pink-400">
+                    <button onClick={() => setView('favorites')} className="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-red-500/50 transition flex flex-col items-center gap-2">
+                        <div className="bg-red-500/20 p-3 rounded-full text-red-400">
                             <Heart size={24} />
                         </div>
                         <span className="font-semibold text-sm">Merkliste</span>
@@ -1442,7 +1442,7 @@ export default function ActAndSwipeApp() {
           <NavButton icon={Home} label="Start" targetView="start" activeColor="text-slate-900" />
           <NavButton icon={Menu} label="Katalog" targetView="catalog" activeColor="text-slate-900" />
           <NavButton icon={Library} label="Wissen" targetView="theory" activeColor="text-blue-600" />
-          <NavButton icon={Heart} label="Merkliste" targetView="favorites" activeColor="text-pink-600" />
+          <NavButton icon={Heart} label="Merkliste" targetView="favorites" activeColor="text-red-600" />
         </nav>
       )}
     </div>
